@@ -42,20 +42,16 @@ public class RobotContainer {
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
                                                           () -> -driveController.getRightX(),
                                                           () -> -driveController.getRightY());
-    // FPSDriveCmd FPSDrive = new FPSDriveCmd(drivebase,
-    //                                                       // Applies deadbands and inverts controls because joysticks
-    //                                                       // are back-right positive while robot
-    //                                                       // controls are front-left positive
-    //                                                       () -> MathUtil.applyDeadband(-driveController.getLeftY(),
-    //                                                                                    OperatorConstants.LEFT_Y_DEADBAND),
-    //                                                       () -> MathUtil.applyDeadband(-driveController.getLeftX(),
-    //                                                                                    OperatorConstants.LEFT_X_DEADBAND),
-    //                                                       () -> MathUtil.applyDeadband(-driveController.getRightX(),
-    //                                                                                    OperatorConstants.LEFT_X_DEADBAND),
-    //                                                       () -> MathUtil.applyDeadband(-driveController.getRightY(),
-    //                                                                                    OperatorConstants.LEFT_Y_DEADBAND),
-    //                                                       false);
-    drivebase.setDefaultCommand(AbsoluteDrive);
+    FPSDrive FPSDrive = new FPSDrive(drivebase,
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY(),
+                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX(),
+                                                                                       OperatorConstants.LEFT_X_DEADBAND),
+                                                          () -> -driveController.getRightX(), () -> true);
+    drivebase.setDefaultCommand(FPSDrive);
   }
 
   /**

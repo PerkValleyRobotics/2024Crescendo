@@ -27,26 +27,6 @@ public class AbsoluteDrive extends Command
   private final DoubleSupplier headingHorizontal, headingVertical;
   private boolean initRotation = false;
 
-  /**
-   * Used to drive a swerve robot in full field-centric mode.  vX and vY supply translation inputs, where x is
-   * torwards/away from alliance wall and y is left/right. headingHorzontal and headingVertical are the Cartesian
-   * coordinates from which the robot's angle will be derived— they will be converted to a polar angle, which the robot
-   * will rotate to.
-   *
-   * @param swerve            The swerve drivebase subsystem.
-   * @param vX                DoubleSupplier that supplies the x-translation joystick input.  Should be in the range -1
-   *                          to 1 with deadband already accounted for.  Positive X is away from the alliance wall.
-   * @param vY                DoubleSupplier that supplies the y-translation joystick input.  Should be in the range -1
-   *                          to 1 with deadband already accounted for.  Positive Y is towards the left wall when
-   *                          looking through the driver station glass.
-   * @param headingHorizontal DoubleSupplier that supplies the horizontal component of the robot's heading angle. In the
-   *                          robot coordinate system, this is along the same axis as vY. Should range from -1 to 1 with
-   *                          no deadband.  Positive is towards the left wall when looking through the driver station
-   *                          glass.
-   * @param headingVertical   DoubleSupplier that supplies the vertical component of the robot's heading angle.  In the
-   *                          robot coordinate system, this is along the same axis as vX.  Should range from -1 to 1
-   *                          with no deadband. Positive is away from the alliance wall.
-   */
   public AbsoluteDrive(SwerveSubsystem swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier headingHorizontal,
                        DoubleSupplier headingVertical)
   {
