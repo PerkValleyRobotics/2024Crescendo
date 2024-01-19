@@ -60,6 +60,7 @@
       "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
       "/LiveWindow/Ungrouped/Pigeon 2 [13]": "Gyro",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Autons": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Pigeon 2 (v6) [13]": "Gyro",
@@ -95,6 +96,9 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Auto Chooser": {
+          "open": true
+        },
         "Field": {
           "open": true
         },

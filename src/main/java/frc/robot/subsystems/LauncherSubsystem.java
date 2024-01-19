@@ -11,7 +11,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Launcher extends SubsystemBase {
+public class LauncherSubsystem extends SubsystemBase {
 
   private CANSparkMax left;
   private CANSparkMax right;
@@ -23,7 +23,7 @@ public class Launcher extends SubsystemBase {
   private double leftSet;
   private double rightSet;
 
-  public Launcher() {
+  public LauncherSubsystem() {
     left.restoreFactoryDefaults();
     right.restoreFactoryDefaults();
 
@@ -39,6 +39,8 @@ public class Launcher extends SubsystemBase {
     leftPIDController.setIZone(0);
     leftPIDController.setFF(0);
     leftPIDController.setOutputRange(-1, 1);
+    leftPIDController.setSmartMotionAccelStrategy(SparkPIDController.AccelStrategy.kTrapezoidal, 0);
+    leftPIDController.setSmartMotionAllowedClosedLoopError(0, 0);
 
     rightPIDController.setP(0);
     rightPIDController.setI(0);

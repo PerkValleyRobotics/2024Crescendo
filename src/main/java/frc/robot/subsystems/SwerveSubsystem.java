@@ -55,6 +55,7 @@ public class SwerveSubsystem extends SubsystemBase {
       throw new RuntimeException(e);
     }
     swerveDrive.setHeadingCorrection(false);
+    setUpPathplanner();
 
   }
 
@@ -66,8 +67,8 @@ public class SwerveSubsystem extends SubsystemBase {
         new HolonomicPathFollowerConfig(
             new PIDConstants(5.0, 0, 0),
             new PIDConstants(swerveDrive.swerveController.config.headingPIDF.p,
-                swerveDrive.swerveController.config.headingPIDF.i,
-                swerveDrive.swerveController.config.headingPIDF.d),
+                             swerveDrive.swerveController.config.headingPIDF.i,
+                             swerveDrive.swerveController.config.headingPIDF.d),
             4.5,
             swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
             new ReplanningConfig()),
