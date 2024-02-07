@@ -6,7 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.*;
-import frc.robot.commands.RunIntakeCmd;
+//import frc.robot.commands.RunIntakeCmd;
 import frc.robot.commands.DriveCmds.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -29,7 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
-  private final LauncherSubsystem launcher = new LauncherSubsystem();
+  //private final LauncherSubsystem launcher = new LauncherSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController driveController = new XboxController(OperatorConstants.kDriverControllerPort);
@@ -77,7 +78,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new JoystickButton(operatorController, 1).whileTrue(new RunIntakeCmd(launcher, -1));
+    //new JoystickButton(operatorController, 1).whileTrue(new RunIntakeCmd(launcher, -1));
+    new JoystickButton(driveController, 1).whileTrue(new InstantCommand(drivebase::zeroGyro));
   }
 
   /**
