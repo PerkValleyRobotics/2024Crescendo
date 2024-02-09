@@ -6,10 +6,12 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.*;
+import frc.robot.commands.CenterOnTagCmd;
 //import frc.robot.commands.RunIntakeCmd;
 import frc.robot.commands.DriveCmds.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -30,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
+  private final VisionSubsystem vision = new VisionSubsystem();
   //private final LauncherSubsystem launcher = new LauncherSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -40,19 +44,25 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    //auton commands
+    NamedCommands.registerCommand("print", new PrintCommand("Hello World"));
+    NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 2));
+    NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 3, 2));
+
     // Configure the trigger bindings
     configureBindings();
 
-    // AbsoluteDrive AbsoluteDrive = new AbsoluteDrive(drivebase,
-    //                                                       // Applies deadbands and inverts controls because joysticks
-    //                                                       // are back-right positive while robot
-    //                                                       // controls are front-left positive
-    //                                                       () -> MathUtil.applyDeadband(-driveController.getLeftY(),
-    //                                                                                    OperatorConstants.LEFT_Y_DEADBAND),
-    //                                                       () -> MathUtil.applyDeadband(-driveController.getLeftX(),
-    //                                                                                    OperatorConstants.LEFT_X_DEADBAND),
-    //                                                       () -> -driveController.getRightX(),
-    //                                                       () -> -driveController.getRightY());
+    AbsoluteDrive AbsoluteDrive = new AbsoluteDrive(drivebase,
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY(),
+                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX(),
+                                                                                       OperatorConstants.LEFT_X_DEADBAND),
+                                                          () -> -driveController.getRightX(),
+                                                          () -> -driveController.getRightY());
     FPSDrive FPSDrive = new FPSDrive(drivebase,
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
