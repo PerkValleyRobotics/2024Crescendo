@@ -14,7 +14,7 @@ import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveController;
 
 public class FPSDrive extends Command {
-  private final SwerveSubsystem swerve;
+  public final SwerveSubsystem swerve;
   private final DoubleSupplier vX;
   private final DoubleSupplier vY;
   private final DoubleSupplier omega;

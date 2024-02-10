@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -12,30 +14,34 @@ import frc.robot.subsystems.VisionSubsystem;
 import swervelib.SwerveController;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 
 public class CenterOnTagCmd extends CommandBase {
   /** Creates a new TurnToTagCmd. */
   private VisionSubsystem vision;
   private SwerveSubsystem swerve;
 
-  private PIDController controllerx, controllery, controllerRotation;
+  private ProfiledPIDController controllerx, controllery;
+  private PIDController controllerRotation;
+  private TrapezoidProfile trapezoidProfile;
 
   public CenterOnTagCmd(VisionSubsystem vision, SwerveSubsystem swerve, double xSetPoint, double ySetPoint) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.vision = vision;
     this.swerve = swerve;
 
-    controllerx = new PIDController(0.03, 0.02, 0.0015); 
+    controllerx = new ProfiledPIDController(0.03, 0.02, 0.0015, new TrapezoidProfile.Constraints(Units.feetToMeters(10), Units.feetToMeters(2))); 
 
-    controllerx.setSetpoint(xSetPoint);
-    controllerx.setTolerance(0.2);
+    //controllerx.setSetpoint(xSetPoint);
+    controllerx.setGoal(xSetPoint);
+    controllerx.setTolerance(1);
 
-    controllery = new PIDController(0.275, 0.05, 0); 
+    controllery = new ProfiledPIDController(0.275, 0.05, 0, new TrapezoidProfile.Constraints(Units.feetToMeters(10), Units.feetToMeters(2))); 
 
-    controllery.setSetpoint(ySetPoint);
-    controllery.setTolerance(0.2);
+    controllery.setGoal(ySetPoint);
+    controllery.setTolerance(.1);
 
-    controllerRotation = new PIDController(0.04, 0.01, 0); 
+    controllerRotation = new PIDController(0.02, 0.005, 0); 
 
     controllerRotation.setSetpoint(0);
 

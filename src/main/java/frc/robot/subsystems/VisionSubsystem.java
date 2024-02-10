@@ -27,6 +27,7 @@ public class VisionSubsystem extends SubsystemBase {
 
   public VisionSubsystem() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
+
     tx = table.getEntry("tx");
     ty = table.getEntry("ty");
     ta = table.getEntry("ta");

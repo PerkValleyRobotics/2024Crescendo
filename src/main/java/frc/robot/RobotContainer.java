@@ -7,13 +7,15 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.*;
 import frc.robot.commands.CenterOnTagCmd;
-//import frc.robot.commands.RunIntakeCmd;
+import frc.robot.commands.RunIntakeCmd;
 import frc.robot.commands.DriveCmds.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,7 +36,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
   private final VisionSubsystem vision = new VisionSubsystem();
-  //private final LauncherSubsystem launcher = new LauncherSubsystem();
+  private final LauncherSubsystem launcher = new LauncherSubsystem();
+
+  private final AbsoluteDrive AbsoluteDrive;
+  private final FPSDrive FPSDrive;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController driveController = new XboxController(OperatorConstants.kDriverControllerPort);
@@ -47,13 +52,13 @@ public class RobotContainer {
 
     //auton commands
     NamedCommands.registerCommand("print", new PrintCommand("Hello World"));
-    NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 2));
-    NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 3, 2));
+    NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 1.2));
+    NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 0, .7));
 
     // Configure the trigger bindings
     configureBindings();
 
-    AbsoluteDrive AbsoluteDrive = new AbsoluteDrive(drivebase,
+    AbsoluteDrive = new AbsoluteDrive(drivebase,
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
                                                           // controls are front-left positive
@@ -63,7 +68,7 @@ public class RobotContainer {
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
                                                           () -> -driveController.getRightX(),
                                                           () -> -driveController.getRightY());
-    FPSDrive FPSDrive = new FPSDrive(drivebase,
+    FPSDrive = new FPSDrive(drivebase,
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
                                                           // controls are front-left positive
@@ -72,7 +77,7 @@ public class RobotContainer {
                                                           () -> MathUtil.applyDeadband(-driveController.getLeftX(),
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
                                                           () -> -driveController.getRightX(), () -> true);
-    drivebase.setDefaultCommand(FPSDrive);
+    drivebase.setDefaultCommand(AbsoluteDrive);
 
     autChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autChooser);
@@ -88,8 +93,15 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    //new JoystickButton(operatorController, 1).whileTrue(new RunIntakeCmd(launcher, -1));
+    new JoystickButton(operatorController, 1).whileTrue(new RunIntakeCmd(launcher, -.9625));
+    new JoystickButton(operatorController, 2).whileTrue(new RunIntakeCmd(launcher, .5));
     new JoystickButton(driveController, 1).whileTrue(new InstantCommand(drivebase::zeroGyro));
+    // new JoystickButton(driveController, 7).whileTrue(new InstantCommand(drivebase.setDefaultCommand(FPSDrive)));
+    // new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> drivebase.setDefaultCommand(AbsoluteDrive)));
+    new JoystickButton(driveController, 2).whileTrue(new CenterOnTagCmd(vision, drivebase, 0, 2));
+
+    new JoystickButton(driveController, 5).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(7)));
+    new JoystickButton(driveController, 6).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0)));
   }
 
   /**
