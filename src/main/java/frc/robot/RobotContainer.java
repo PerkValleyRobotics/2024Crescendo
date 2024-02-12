@@ -8,12 +8,17 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.*;
 import frc.robot.commands.CenterOnTagCmd;
 import frc.robot.commands.RunIntakeCmd;
+import frc.robot.commands.RunLauncherCmd;
+import frc.robot.commands.ToggleIntakeCmd;
 import frc.robot.commands.DriveCmds.*;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.XboxController;
@@ -37,7 +42,7 @@ public class RobotContainer {
   private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
   private final VisionSubsystem vision = new VisionSubsystem();
   private final LauncherSubsystem launcher = new LauncherSubsystem();
-
+  private final IntakeSubsystem intake = new IntakeSubsystem();
   private final AbsoluteDrive AbsoluteDrive;
   private final FPSDrive FPSDrive;
 
@@ -46,6 +51,11 @@ public class RobotContainer {
   private final XboxController operatorController = new XboxController(OperatorConstants.kOperatorControllerPort);
 
   private final SendableChooser<Command> autChooser;
+
+  //Pathfinding commands
+  Pose2d targetPose = new Pose2d(0,0,Rotation2d.fromDegrees(180));
+  PathConstraints constraints = new PathConstraints(2, 4, Units.degreesToRadians(540), Units.degreesToRadians(720));
+  private Command PathPlanningCommand = AutoBuilder.pathfindToPose(targetPose, constraints,0,0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -93,8 +103,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new JoystickButton(operatorController, 1).whileTrue(new RunIntakeCmd(launcher, -.9625));
-    new JoystickButton(operatorController, 2).whileTrue(new RunIntakeCmd(launcher, .5));
+    new JoystickButton(operatorController, 1).whileTrue(new RunLauncherCmd(launcher, -.9625));
+    new JoystickButton(operatorController, 2).whileTrue(new RunLauncherCmd(launcher, .5));
     new JoystickButton(driveController, 1).whileTrue(new InstantCommand(drivebase::zeroGyro));
     // new JoystickButton(driveController, 7).whileTrue(new InstantCommand(drivebase.setDefaultCommand(FPSDrive)));
     // new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> drivebase.setDefaultCommand(AbsoluteDrive)));
@@ -102,7 +112,11 @@ public class RobotContainer {
 
     new JoystickButton(driveController, 5).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(7)));
     new JoystickButton(driveController, 6).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0)));
-  }
+    new JoystickButton(driveController, 3).whileTrue(new RunIntakeCmd(intake, .7));
+    new JoystickButton(driveController, 4).onTrue(new ToggleIntakeCmd(intake));
+
+    // new JoystickButton(driveController, 7).onTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints,0,0)));
+    }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

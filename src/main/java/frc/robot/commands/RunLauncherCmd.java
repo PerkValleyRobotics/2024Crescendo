@@ -5,23 +5,26 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.*;
 
-public class RunIntakeCmd extends Command {
+public class RunLauncherCmd extends Command {
+  private final double speed;
+  private final LauncherSubsystem shooter;
   /** Creates a new RunIntakeCmd. */
-  IntakeSubsystem intake;
-  double speed;
-  public RunIntakeCmd(IntakeSubsystem intake, double speed) {
+  public RunLauncherCmd(LauncherSubsystem shooter, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.intake = intake;
+    this.shooter = shooter;
     this.speed = speed;
-    addRequirements(intake);
+
+    addRequirements(shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.run(speed);
+    //Start the motor running at the specified Speed
+    shooter.setLeft(speed);
+    shooter.setRight(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -31,7 +34,9 @@ public class RunIntakeCmd extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.run(0);
+    //Stop the motor
+    shooter.setLeft(0);
+    shooter.setRight(0);
   }
 
   // Returns true when the command should end.
