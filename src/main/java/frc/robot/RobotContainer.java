@@ -15,6 +15,7 @@ import frc.robot.commands.DriveCmds.*;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -72,9 +73,9 @@ public class RobotContainer {
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
                                                           // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY(),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/2,
                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX(),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
                                                           () -> -driveController.getRightX(),
                                                           () -> -driveController.getRightY());
@@ -115,8 +116,8 @@ public class RobotContainer {
     new JoystickButton(driveController, 3).whileTrue(new RunIntakeCmd(intake, .7));
     new JoystickButton(driveController, 4).onTrue(new ToggleIntakeCmd(intake));
 
-    // new JoystickButton(driveController, 7).onTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints,0,0)));
-    }
+    new JoystickButton(driveController, 7).whileTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints)));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
