@@ -11,6 +11,8 @@ import frc.robot.commands.RunIntakeCmd;
 import frc.robot.commands.RunLauncherCmd;
 import frc.robot.commands.ToggleIntakeCmd;
 import frc.robot.commands.DriveCmds.*;
+import frc.robot.commands.Pathfinding.PathFindToPosCmd;
+import frc.robot.commands.Pathfinding.StraightToPoseCmd;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -44,6 +46,7 @@ public class RobotContainer {
   private final VisionSubsystem vision = new VisionSubsystem();
   private final LauncherSubsystem launcher = new LauncherSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final PathfindingSubsystem pathing = new PathfindingSubsystem(0, 0);
   private final AbsoluteDrive AbsoluteDrive;
   private final FPSDrive FPSDrive;
 
@@ -54,9 +57,9 @@ public class RobotContainer {
   private final SendableChooser<Command> autChooser;
 
   //Pathfinding commands
-  Pose2d targetPose = new Pose2d(0,0,Rotation2d.fromDegrees(180));
-  PathConstraints constraints = new PathConstraints(2, 4, Units.degreesToRadians(540), Units.degreesToRadians(720));
-  private Command PathPlanningCommand = AutoBuilder.pathfindToPose(targetPose, constraints,0,0);
+  //Pose2d targetPose = new Pose2d(1.25,7,Rotation2d.fromDegrees(180));
+  //PathConstraints constraints = new PathConstraints(2, 4, Units.degreesToRadians(540), Units.degreesToRadians(720));
+  //private Command PathPlanningCommand = AutoBuilder.pathfindToPose(targetPose, constraints,0,0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -116,7 +119,9 @@ public class RobotContainer {
     new JoystickButton(driveController, 3).whileTrue(new RunIntakeCmd(intake, .7));
     new JoystickButton(driveController, 4).onTrue(new ToggleIntakeCmd(intake));
 
-    new JoystickButton(driveController, 7).whileTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints)));
+    //new JoystickButton(driveController, 7).whileTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints)));
+    //new JoystickButton(driveController, 7).whileTrue(new StraightToPoseCmd(drivebase, 0, 0, 0));
+    new JoystickButton(driveController, 7).onTrue(new PathFindToPosCmd(drivebase, pathing, new double[] {0,0,0}));
   }
 
   /**
