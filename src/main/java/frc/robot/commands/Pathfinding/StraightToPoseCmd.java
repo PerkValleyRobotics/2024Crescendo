@@ -32,7 +32,7 @@ public class StraightToPoseCmd extends CommandBase {
 
     //controllerx.setSetpoint(xSetPoint);
     controllerx.setGoal(xSetPoint);
-    controllerx.setTolerance(1);
+    controllerx.setTolerance(.1);
 
     controllery = new ProfiledPIDController(0.275, 0.05, 0, new TrapezoidProfile.Constraints(Units.feetToMeters(10), Units.feetToMeters(2))); 
 
@@ -53,7 +53,7 @@ public class StraightToPoseCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    swerve.drive(SwerveController.getTranslation2d(swerve.getTargetSpeeds(controllery.calculate(swerve.getPose().getX()), controllerx.calculate(swerve.getPose().getY()), 0, 0)), -controllerRotation.calculate(swerve.getPose().getRotation().getDegrees()), false);
+    swerve.drive(SwerveController.getTranslation2d(swerve.getTargetSpeeds(controllery.calculate(swerve.getPose().getX()), controllerx.calculate(swerve.getPose().getY()), 0, 0)), -controllerRotation.calculate(swerve.getPose().getRotation().getDegrees()), true);
      
 
     SmartDashboard.putBoolean("code run", true);

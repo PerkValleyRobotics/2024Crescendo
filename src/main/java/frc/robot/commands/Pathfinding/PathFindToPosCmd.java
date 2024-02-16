@@ -1,6 +1,8 @@
 package frc.robot.commands.Pathfinding;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.PathfindingSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -32,12 +34,14 @@ public class PathFindToPosCmd extends CommandBase {
         for (int i = 0; i < posList.length; i++) {
             pathLineCmdList[i] = new StraightToPoseCmd(swerve, posList[i][0], posList[i][1], posList[i][2]);
         }
+        Command group = new SequentialCommandGroup(new StraightToPoseCmd(swerve, 1,0,0));
+        group.execute();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        new SequentialCommandGroup(pathLineCmdList);
+       
     }
 
     // Returns true when the command should end.

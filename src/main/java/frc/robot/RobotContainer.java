@@ -76,9 +76,9 @@ public class RobotContainer {
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
                                                           // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/2,
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY(),
                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX(),
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
                                                           () -> -driveController.getRightX(),
                                                           () -> -driveController.getRightY());
@@ -121,8 +121,11 @@ public class RobotContainer {
 
     //new JoystickButton(driveController, 7).whileTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints)));
     //new JoystickButton(driveController, 7).whileTrue(new StraightToPoseCmd(drivebase, 0, 0, 0));
-    new JoystickButton(driveController, 7).onTrue(new PathFindToPosCmd(drivebase, pathing, new double[] {0,0,0}));
+    //new JoystickButton(driveController, 7).onTrue(new PathFindToPosCmd(drivebase, pathing, new double[] {0,0,0}));
+    //new JoystickButton(driveController, 2).whileTrue(new StraightToPoseCmd(drivebase,1,0,0));
+
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
