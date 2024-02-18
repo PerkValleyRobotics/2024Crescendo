@@ -78,8 +78,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    if (LimelightHelpers.getTV("limelight")){
-      Pose2d pos = LimelightHelpers.getBotPose2d_wpiBlue("limelight");
+    if (LimelightHelpers.getTV("limelight-launch")){
+      Pose2d pos = LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch");
       //Pose2d pos2d = new Pose2d(pos.getX(), pos.getY(), new Rotation2d(pos.getRotation().getAngle()));
       double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight")/1000.0);
       driveBase.updateOdometry(pos, timestamp);

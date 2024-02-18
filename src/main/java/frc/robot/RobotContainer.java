@@ -123,6 +123,7 @@ public class RobotContainer {
     //new JoystickButton(driveController, 7).whileTrue(new StraightToPoseCmd(drivebase, 0, 0, 0));
     //new JoystickButton(driveController, 7).onTrue(new PathFindToPosCmd(drivebase, pathing, new double[] {0,0,0}));
     //new JoystickButton(driveController, 2).whileTrue(new StraightToPoseCmd(drivebase,1,0,0));
+    new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> SmartDashboard.putString("Current Pose", "X: "+drivebase.getPose().getX()+"\nY: "+drivebase.getPose().getY())));
 
   }
 

@@ -12,21 +12,39 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "ToggleIntakeCmd"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Note 1"
+            "pathName": "Note(01)"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "centerOnTag"
+            "name": "ToggleIntakeCmd"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "behindCenterOnTag"
+            "name": "ToggleIntakeCmd"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note(12)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ToggleIntakeCmd"
           }
         }
       ]
