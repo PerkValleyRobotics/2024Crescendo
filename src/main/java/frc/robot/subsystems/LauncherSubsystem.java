@@ -25,7 +25,7 @@ public class LauncherSubsystem extends SubsystemBase {
   private double rightSet;
 
   public LauncherSubsystem() {
-    left = new CANSparkMax(9, MotorType.kBrushless);
+    left = new CANSparkMax(5, MotorType.kBrushless);
     right = new CANSparkMax(10, MotorType.kBrushless);
     
     left.restoreFactoryDefaults();

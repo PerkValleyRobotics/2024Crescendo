@@ -76,9 +76,9 @@ public class RobotContainer {
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
                                                           // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY(),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/3,
                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX(),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/3,
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
                                                           () -> -driveController.getRightX(),
                                                           () -> -driveController.getRightY());
@@ -112,11 +112,12 @@ public class RobotContainer {
     new JoystickButton(driveController, 1).whileTrue(new InstantCommand(drivebase::zeroGyro));
     // new JoystickButton(driveController, 7).whileTrue(new InstantCommand(drivebase.setDefaultCommand(FPSDrive)));
     // new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> drivebase.setDefaultCommand(AbsoluteDrive)));
-    new JoystickButton(driveController, 2).whileTrue(new CenterOnTagCmd(vision, drivebase, 0, 2));
+    //new JoystickButton(driveController, 2).whileTrue(new CenterOnTagCmd(vision, drivebase, 0, 2));
 
     new JoystickButton(driveController, 5).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(7)));
     new JoystickButton(driveController, 6).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0)));
-    new JoystickButton(driveController, 3).whileTrue(new RunIntakeCmd(intake, .7));
+    new JoystickButton(driveController, 3).whileTrue(new RunIntakeCmd(intake, -.9));
+    new JoystickButton(driveController, 2).whileTrue(new RunIntakeCmd(intake, .9));
     new JoystickButton(driveController, 4).onTrue(new ToggleIntakeCmd(intake));
 
     //new JoystickButton(driveController, 7).whileTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints)));
