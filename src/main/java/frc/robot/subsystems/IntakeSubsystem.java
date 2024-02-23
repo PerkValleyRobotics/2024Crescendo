@@ -13,19 +13,21 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+//import edu.wpi.first.wpilibj.Compressor;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new Intake. */
   CANSparkMax intake;
   DoubleSolenoid intakeSolenoid;
   boolean toggle;
+  //Compressor comp = new Compressor(PneumaticsModuleType.CTREPCM);
 
   public IntakeSubsystem() {
     intake = new CANSparkMax(Constants.KIntakeMotorID, CANSparkLowLevel.MotorType.kBrushless);
 
     toggle = false;
 
-    intakeSolenoid = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 1, 0);
+    intakeSolenoid = new DoubleSolenoid(0, PneumaticsModuleType.CTREPCM, 1, 0);
   }
 
   @Override
