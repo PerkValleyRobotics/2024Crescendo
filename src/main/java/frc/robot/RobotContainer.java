@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.*;
 import frc.robot.commands.CenterOnTagCmd;
+import frc.robot.commands.LauncherAngleCmd;
+// import frc.robot.commands.RunBeltCmd;
 import frc.robot.commands.RunIntakeCmd;
 import frc.robot.commands.RunLauncherCmd;
 import frc.robot.commands.ToggleIntakeCmd;
@@ -29,6 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -116,15 +119,17 @@ public class RobotContainer {
 
     new JoystickButton(driveController, 5).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(7)));
     new JoystickButton(driveController, 6).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0)));
-    new JoystickButton(driveController, 3).whileTrue(new RunIntakeCmd(intake, -.9));
-    new JoystickButton(driveController, 2).whileTrue(new RunIntakeCmd(intake, .9));
+    // new JoystickButton(driveController, 3).whileTrue(new ParallelCommandGroup(new RunIntakeCmd(intake, -.9), new RunBeltCmd(launcher, -.9)));
+    // new JoystickButton(driveController, 2).whileTrue(new ParallelCommandGroup(new RunIntakeCmd(intake, .9), new RunBeltCmd(launcher, .9)));
     new JoystickButton(driveController, 4).onTrue(new ToggleIntakeCmd(intake));
+    new JoystickButton(driveController,7).onTrue(new LauncherAngleCmd(launcher, 0));
+    // new JoystickButton(driveController, 8).whileTrue(new RunLauncherCmd(launcher, -.9625));
 
     //new JoystickButton(driveController, 7).whileTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints)));
     //new JoystickButton(driveController, 7).whileTrue(new StraightToPoseCmd(drivebase, 0, 0, 0));
     //new JoystickButton(driveController, 7).onTrue(new PathFindToPosCmd(drivebase, pathing, new double[] {0,0,0}));
     //new JoystickButton(driveController, 2).whileTrue(new StraightToPoseCmd(drivebase,1,0,0));
-    new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> SmartDashboard.putString("Current Pose", "X: "+drivebase.getPose().getX()+"\nY: "+drivebase.getPose().getY())));
+    //new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> SmartDashboard.putString("Current Pose", "X: "+drivebase.getPose().getX()+"\nY: "+drivebase.getPose().getY())));
 
   }
 
