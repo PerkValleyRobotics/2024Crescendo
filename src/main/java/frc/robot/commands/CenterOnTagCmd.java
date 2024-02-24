@@ -61,7 +61,7 @@ public class CenterOnTagCmd extends CommandBase {
      }
      else swerve.drive(new Translation2d(0, 0), 0, false);
 
-     SmartDashboard.putBoolean("code run", true);
+    //  SmartDashboard.putBoolean("code run", true);
   }
 
   // Called once the command ends or is interrupted.

@@ -13,9 +13,10 @@ import frc.robot.commands.RunIntakeCmd;
 import frc.robot.commands.RunLauncherCmd;
 import frc.robot.commands.ToggleIntakeCmd;
 import frc.robot.commands.DriveCmds.*;
-import frc.robot.commands.Pathfinding.PathFindToPosCmd;
-import frc.robot.commands.Pathfinding.StraightToPoseCmd;
+//import frc.robot.commands.Pathfinding.PathFindToPosCmd;
+//import frc.robot.commands.Pathfinding.StraightToPoseCmd;
 
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
@@ -26,6 +27,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -49,7 +51,7 @@ public class RobotContainer {
   private final VisionSubsystem vision = new VisionSubsystem();
   private final LauncherSubsystem launcher = new LauncherSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
-  private final PathfindingSubsystem pathing = new PathfindingSubsystem(0, 0);
+  //private final PathfindingSubsystem pathing = new PathfindingSubsystem(0, 0);
   private final AbsoluteDrive AbsoluteDrive;
   private final FPSDrive FPSDrive;
 
@@ -66,11 +68,13 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    DriverStation.silenceJoystickConnectionWarning(true);
 
     //auton commands
     NamedCommands.registerCommand("print", new PrintCommand("Hello World"));
     NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 1.2));
     NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 0, .7));
+    NamedCommands.registerCommand("ToggleIntakeCmd", new ToggleIntakeCmd(intake));
 
     // Configure the trigger bindings
     configureBindings();
@@ -97,7 +101,7 @@ public class RobotContainer {
     drivebase.setDefaultCommand(AbsoluteDrive);
 
     autChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autChooser);
+    // SmartDashboard.putData("Auto Chooser", autChooser);
   }
 
   /**

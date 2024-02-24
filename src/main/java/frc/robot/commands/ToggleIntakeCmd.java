@@ -20,7 +20,6 @@ public class ToggleIntakeCmd extends Command {
   @Override
   public void initialize() {
     intake.toggleIntake();
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
