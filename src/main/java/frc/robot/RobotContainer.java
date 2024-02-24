@@ -49,8 +49,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
   private final VisionSubsystem vision = new VisionSubsystem();
-  private final LauncherSubsystem launcher = new LauncherSubsystem();
-  private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final LauncherSubsystem launcher = LauncherSubsystem.getInstance();
+  private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
   //private final PathfindingSubsystem pathing = new PathfindingSubsystem(0, 0);
   private final AbsoluteDrive AbsoluteDrive;
   private final FPSDrive FPSDrive;
