@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LauncherSubsystem extends SubsystemBase {
 
+  private static LauncherSubsystem instance;
+
   private CANSparkMax left;
   private CANSparkMax right;
   private CANSparkMax rotation;
