@@ -26,10 +26,19 @@ public final class Constants {
 
   //Can IDs
   public static final int KIntakeMotorID = 8;
-  public static final int KLauncherBeltMotorID;
-  public static final int KLauncherPivotMotorID;
-  public static final int KLeftLauncherMotorID;
-  public static final int KRightLauncherMotorID;
+  public static final int KLauncherBeltMotorID = 6;
+  public static final int KLauncherPivotMotorID = 7;
+  public static final int KLeftLauncherMotorID = 9;
+  public static final int KRightLauncherMotorID = 10;
+
+  // launcher tint PID
+  public static final double KlauncherTiltP = 0.075;
+  public static final double KlauncherTiltI = 0;
+  public static final double KlauncherTiltD = 0.00;
+  public static final double KlauncherTiltIZ = 0;
+  public static final double KlauncherTiltFF = 0;
+  public static final double KlauncherTiltOutputMin = -1;
+  public static final double KlauncherTiltOUtputMax = 1;
 
   public static final class Auton{
 

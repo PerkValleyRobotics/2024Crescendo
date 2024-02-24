@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class LauncherSubsystem extends SubsystemBase {
 
@@ -20,7 +21,6 @@ public class LauncherSubsystem extends SubsystemBase {
   private CANSparkMax left;
   private CANSparkMax right;
   private CANSparkMax rotation;
-  private CANSparkMax belt;
 
   // private SparkPIDController leftPIDController;
   // private SparkPIDController rightPIDController;
@@ -32,18 +32,17 @@ public class LauncherSubsystem extends SubsystemBase {
 
   private double leftSet;
   private double rightSet;
+  private double setpoint;
 
   public LauncherSubsystem() {
-    left = new CANSparkMax(9, MotorType.kBrushless);
-    right = new CANSparkMax(10, MotorType.kBrushless);
-    rotation = new CANSparkMax(7,MotorType.kBrushless);
-    belt = new CANSparkMax(6,MotorType.kBrushless);
+    left = new CANSparkMax(Constants.KLeftLauncherMotorID, MotorType.kBrushless);
+    right = new CANSparkMax(Constants.KRightLauncherMotorID, MotorType.kBrushless);
+    rotation = new CANSparkMax(Constants.KLauncherPivotMotorID,MotorType.kBrushless);
 
 
     left.restoreFactoryDefaults();
     right.restoreFactoryDefaults();
     rotation.restoreFactoryDefaults();
-    belt.restoreFactoryDefaults();
     
     rotationPIDController = rotation.getPIDController();
   
@@ -70,12 +69,12 @@ public class LauncherSubsystem extends SubsystemBase {
     // rightPIDController.setFF(0);
     // rightPIDController.setOutputRange(-1, 1);
 
-    rotationPIDController.setP(0);
-    rotationPIDController.setI(0);
-    rotationPIDController.setD(0);
-    rotationPIDController.setIZone(0);
-    rotationPIDController.setFF(0);
-    rotationPIDController.setOutputRange(-1, 1);
+    rotationPIDController.setP(Constants.KlauncherTiltP);
+    rotationPIDController.setI(Constants.KlauncherTiltI);
+    rotationPIDController.setD(Constants.KlauncherTiltD);
+    rotationPIDController.setIZone(Constants.KlauncherTiltIZ);
+    rotationPIDController.setFF(Constants.KlauncherTiltFF);
+    rotationPIDController.setOutputRange(Constants.KlauncherTiltOutputMin, Constants.KlauncherTiltOUtputMax);
 
     leftSet = 0;
     rightSet = 0;
@@ -105,11 +104,20 @@ public class LauncherSubsystem extends SubsystemBase {
   // }
 
   public void setAngle(double setpoint) {
+    this.setpoint = setpoint;
     rotationPIDController.setReference(setpoint, CANSparkMax.ControlType.kPosition); 
+  }
+
+  public double getSetpoint() {
+    return setpoint;
   }
 
   public double getAngle() {
     return rotationEncoder.getPosition();
+  }
+
+  public double[] getVelocity() {
+    return new double[] {leftEncoder.getVelocity(), rightEncoder.getVelocity()};
   }
 
   public void setLeft(double speed){
@@ -120,8 +128,14 @@ public class LauncherSubsystem extends SubsystemBase {
     right.set(-speed);
   }
 
-  public void runBelt(double speed)
-  {
-    belt.set(speed);
+  
+
+  public static LauncherSubsystem getInstance(){
+    if (instance == null){
+      instance = new LauncherSubsystem();
+      return instance;
+    } else {
+      return instance;
+    }
   }
 }

@@ -37,6 +37,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private ShuffleBoardHandler shuffle = new ShuffleBoardHandler();
+
   private static SendableChooser m_chooser;
 
   private Timer disabledTimer;
@@ -62,6 +64,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Autons", m_chooser);
 
     disabledTimer = new Timer();
+
+    shuffle.setUp();
   }
 
   /**
@@ -84,6 +88,7 @@ public class Robot extends TimedRobot {
     //   double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight-launch")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight-launch")/1000.0);
     //   driveBase.updateOdometry(pos, timestamp);
     // }
+    shuffle.update();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

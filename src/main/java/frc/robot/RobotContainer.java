@@ -8,6 +8,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.*;
 import frc.robot.commands.CenterOnTagCmd;
 import frc.robot.commands.LauncherAngleCmd;
+import frc.robot.commands.LauncherManualAngleCmd;
+import frc.robot.commands.RunBeltCmd;
 // import frc.robot.commands.RunBeltCmd;
 import frc.robot.commands.RunIntakeCmd;
 import frc.robot.commands.RunLauncherCmd;
@@ -48,16 +50,19 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = SwerveSubsystem.getInstance();
-  private final VisionSubsystem vision = new VisionSubsystem();
+  private final VisionSubsystem vision = VisionSubsystem.getInstance();
   private final LauncherSubsystem launcher = LauncherSubsystem.getInstance();
   private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
+  private final ConveyorSubsystem conveyor = ConveyorSubsystem.getInstance();
   //private final PathfindingSubsystem pathing = new PathfindingSubsystem(0, 0);
   private final AbsoluteDrive AbsoluteDrive;
   private final FPSDrive FPSDrive;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController driveController = new XboxController(OperatorConstants.kDriverControllerPort);
-  private final XboxController operatorController = new XboxController(OperatorConstants.kOperatorControllerPort);
+  // private final XboxController driveController = new XboxController(OperatorConstants.kDriverControllerPort);
+  // private final XboxController operatorController = new XboxController(OperatorConstants.kOperatorControllerPort);
+  private final CommandXboxController driveController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
   private final SendableChooser<Command> autChooser;
 
@@ -83,9 +88,9 @@ public class RobotContainer {
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
                                                           // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/3,
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/1.5,
                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/3,
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/1.5,
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
                                                           () -> -driveController.getRightX(),
                                                           () -> -driveController.getRightY());
@@ -114,19 +119,19 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    new JoystickButton(operatorController, 1).whileTrue(new RunLauncherCmd(launcher, -.9625));
-    new JoystickButton(operatorController, 2).whileTrue(new RunLauncherCmd(launcher, .5));
-    new JoystickButton(driveController, 1).whileTrue(new InstantCommand(drivebase::zeroGyro));
-    // new JoystickButton(driveController, 7).whileTrue(new InstantCommand(drivebase.setDefaultCommand(FPSDrive)));
-    // new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> drivebase.setDefaultCommand(AbsoluteDrive)));
-    //new JoystickButton(driveController, 2).whileTrue(new CenterOnTagCmd(vision, drivebase, 0, 2));
+    // new JoystickButton(operatorController, 1).whileTrue(new RunLauncherCmd(launcher, -.9625));
+    // new JoystickButton(operatorController, 2).whileTrue(new RunLauncherCmd(launcher, .5));
+    driveController.a().whileTrue(new InstantCommand(drivebase::zeroGyro));
+    // // new JoystickButton(driveController, 7).whileTrue(new InstantCommand(drivebase.setDefaultCommand(FPSDrive)));
+    // // new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> drivebase.setDefaultCommand(AbsoluteDrive)));
+    // //new JoystickButton(driveController, 2).whileTrue(new CenterOnTagCmd(vision, drivebase, 0, 2));
 
-    new JoystickButton(driveController, 5).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(7)));
-    new JoystickButton(driveController, 6).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0)));
+    // new JoystickButton(driveController, 5).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(7)));
+    // new JoystickButton(driveController, 6).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0)));
     // new JoystickButton(driveController, 3).whileTrue(new ParallelCommandGroup(new RunIntakeCmd(intake, -.9), new RunBeltCmd(launcher, -.9)));
     // new JoystickButton(driveController, 2).whileTrue(new ParallelCommandGroup(new RunIntakeCmd(intake, .9), new RunBeltCmd(launcher, .9)));
-    new JoystickButton(driveController, 4).onTrue(new ToggleIntakeCmd(intake));
-    new JoystickButton(driveController,7).onTrue(new LauncherAngleCmd(launcher, 0));
+    // new JoystickButton(driveController, 4).onTrue(new ToggleIntakeCmd(intake));
+    // new JoystickButton(driveController,7).onTrue(new LauncherAngleCmd(launcher, 0));
     // new JoystickButton(driveController, 8).whileTrue(new RunLauncherCmd(launcher, -.9625));
 
     //new JoystickButton(driveController, 7).whileTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints)));
@@ -135,6 +140,25 @@ public class RobotContainer {
     //new JoystickButton(driveController, 2).whileTrue(new StraightToPoseCmd(drivebase,1,0,0));
     //new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> SmartDashboard.putString("Current Pose", "X: "+drivebase.getPose().getX()+"\nY: "+drivebase.getPose().getY())));
 
+    operatorController.pov(0).whileTrue(new LauncherManualAngleCmd(launcher, 1));
+    operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.5));
+
+    operatorController.pov(270).onTrue(new LauncherAngleCmd(launcher, 2));
+    operatorController.pov(90).onTrue(new LauncherAngleCmd(launcher, 8.55));
+
+    operatorController.leftBumper().whileTrue(new RunLauncherCmd(launcher, .9625));
+    operatorController.back().and(operatorController.leftBumper()).whileTrue(new RunLauncherCmd(launcher, -.5));
+  
+    operatorController.rightBumper().whileTrue(new RunBeltCmd(conveyor, -.9));
+    operatorController.back().and(operatorController.rightBumper()).whileTrue(new RunBeltCmd(conveyor, .5));
+
+    operatorController.a().whileTrue(new RunIntakeCmd(intake, -.9));
+    operatorController.back().and(operatorController.a()).whileTrue(new RunIntakeCmd(intake, .9));
+
+    operatorController.x().whileTrue(new ToggleIntakeCmd(intake)); 
+
+    operatorController.b().whileTrue(new ParallelCommandGroup(new RunBeltCmd(conveyor, -.9), new RunIntakeCmd(intake, -.9)));
+    operatorController.back().and(operatorController.b()).whileTrue(new ParallelCommandGroup(new RunBeltCmd(conveyor, .9), new RunIntakeCmd(intake, -.9)));
   }
 
 

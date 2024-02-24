@@ -5,24 +5,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
 
 public class RunBeltCmd extends Command {
   /** Creates a new RunIntakeCmd. */
-  LauncherSubsystem launcher;
+  ConveyorSubsystem conveyor;
   double speed;
-  public RunBeltCmd(LauncherSubsystem launcher, double speed) {
+  public RunBeltCmd(ConveyorSubsystem conveyor, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.launcher = launcher;
+    this.conveyor = conveyor;
     this.speed = speed;
-    addRequirements(launcher);
+    addRequirements(conveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    launcher.runBelt(speed);
+    conveyor.runBelt(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,7 +33,7 @@ public class RunBeltCmd extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    launcher.runBelt(0);
+    conveyor.runBelt(0);
   }
 
   // Returns true when the command should end.

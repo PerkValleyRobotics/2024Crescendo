@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeSubsystem extends SubsystemBase {
 
   private static IntakeSubsystem instance;
+
   /** Creates a new Intake. */
   CANSparkMax intake;
   DoubleSolenoid intakeSolenoid;
@@ -48,5 +49,18 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void run(double speed) {
     intake.set(speed);
+  }
+
+  public boolean getToggle() {
+    return toggle;
+  }
+
+  public static IntakeSubsystem getInstance(){
+    if (instance == null){
+      instance = new IntakeSubsystem();
+      return instance;
+    } else {
+      return instance;
+    }
   }
 }

@@ -10,6 +10,8 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class VisionSubsystem extends SubsystemBase {
+
+  private static VisionSubsystem instance;
   /** Creates a new Vision. */
   private double x = 0.0;
   private double y = 0.0;
@@ -69,5 +71,14 @@ public class VisionSubsystem extends SubsystemBase {
 
   public double getTZ() {
     return campose[2];
+  }
+
+  public static VisionSubsystem getInstance(){
+    if (instance == null){
+      instance = new VisionSubsystem();
+      return instance;
+    } else {
+      return instance;
+    }
   }
 }
