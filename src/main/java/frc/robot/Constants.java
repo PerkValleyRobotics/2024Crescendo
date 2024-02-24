@@ -19,12 +19,17 @@ import swervelib.parser.PIDFConfig;
  */
 public final class Constants {
 
+  //Robot size and basic parameters
   public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
   public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
   public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
 
+  //Can IDs
   public static final int KIntakeMotorID = 8;
-
+  public static final int KLauncherBeltMotorID;
+  public static final int KLauncherPivotMotorID;
+  public static final int KLeftLauncherMotorID;
+  public static final int KRightLauncherMotorID;
 
   public static final class Auton{
 
@@ -37,17 +42,16 @@ public final class Constants {
   }
 
   public static final class Drivebase{
-
     // Hold time on motor brakes when disabled
     public static final double WHEEL_LOCK_TIME = 10; // seconds
   }
   public static class OperatorConstants {
-
+    //Deadband for joysticks on controllers
     public static final double LEFT_X_DEADBAND = 0.01;
     public static final double LEFT_Y_DEADBAND = 0.01;
 
+    //Controller port numbers
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
-    
   }
 }
