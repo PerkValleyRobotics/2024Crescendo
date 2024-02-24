@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
+
+  private static IntakeSubsystem instance;
   /** Creates a new Intake. */
   CANSparkMax intake;
   DoubleSolenoid intakeSolenoid;
