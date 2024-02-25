@@ -78,6 +78,8 @@ public class LauncherSubsystem extends SubsystemBase {
 
     leftSet = 0;
     rightSet = 0;
+
+    rotationEncoder.setPosition(0);
   }
 
   @Override
@@ -114,6 +116,10 @@ public class LauncherSubsystem extends SubsystemBase {
 
   public double getAngle() {
     return rotationEncoder.getPosition();
+  }
+
+  public void resetEncoder() {
+    rotationEncoder.setPosition(0);
   }
 
   public double[] getVelocity() {

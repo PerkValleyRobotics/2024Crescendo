@@ -24,22 +24,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "runLauncherCmd"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "timedBeltCmd"
-                }
-              }
-            ]
+            "name": "timedBeltCmd"
           }
         },
         {
@@ -49,9 +36,21 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note(02)"
+                }
+              },
               {
                 "type": "named",
                 "data": {
@@ -62,12 +61,6 @@
                 "type": "named",
                 "data": {
                   "name": "timedBeltCmd"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Note(02)"
                 }
               }
             ]
@@ -82,7 +75,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoAngleLauncher"
+            "name": "timedBeltCmdRev"
           }
         },
         {
@@ -92,22 +85,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "runLauncherCmd"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "timedBeltCmd"
-                }
-              }
-            ]
+            "name": "timedBeltCmd"
           }
         }
       ]

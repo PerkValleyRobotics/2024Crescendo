@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
@@ -11,10 +13,10 @@ public class RunLauncherCmd extends Command {
   private final double speed;
   private final LauncherSubsystem shooter;
   /** Creates a new RunIntakeCmd. */
-  public RunLauncherCmd(LauncherSubsystem shooter, double speed) {
+  public RunLauncherCmd(LauncherSubsystem shooter, DoubleSupplier speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = shooter;
-    this.speed = speed;
+    this.speed = speed.getAsDouble();
 
     addRequirements(shooter);
   }

@@ -355,4 +355,12 @@ public class SwerveSubsystem extends SubsystemBase {
   public void updateOdometry(Pose2d pos, double timestamp){
     swerveDrive.addVisionMeasurement(pos, timestamp);
   }
+
+  public double triangulateDistanceToSpeaker(boolean blueSide) {
+    return Math.sqrt(Math.pow(0+this.getPose().getX(),2)+Math.pow(5.55-this.getPose().getY(),2));
+  }
+
+  public double getAngleToSpeaker(boolean blueSide) {
+    return Math.atan2(5.55-this.getPose().getY(), 0+this.getPose().getX());
+  }
 }

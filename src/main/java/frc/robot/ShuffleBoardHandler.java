@@ -5,6 +5,7 @@ import java.util.Map;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -22,7 +23,7 @@ public class ShuffleBoardHandler {
   private SwerveSubsystem swerve;
   private VisionSubsystem vision;
 
-  private GenericEntry launcherSetpoint, launcherEncoder, launcherVelocity, intakeState, odometryX, odometryY, odometryH;
+  private GenericEntry launcherSetpoint, launcherEncoder, launcherVelocity, intakeState, odometryX, odometryY, odometryH, launcherSpeed;
   private ShuffleboardLayout launcherGrid, odometryGrid;
 
   public ShuffleBoardHandler() {
@@ -35,7 +36,9 @@ public class ShuffleBoardHandler {
   }
 
   public void setUp() {
-   /*
+   
+   
+    /*
     * Launcher set point
       Intake up or down
       Limelight video
