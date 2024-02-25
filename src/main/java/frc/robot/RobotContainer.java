@@ -71,6 +71,47 @@ public class RobotContainer {
   //PathConstraints constraints = new PathConstraints(2, 4, Units.degreesToRadians(540), Units.degreesToRadians(720));
   //private Command PathPlanningCommand = AutoBuilder.pathfindToPose(targetPose, constraints,0,0);
 
+  AbsoluteDrive = new AbsoluteDrive(drivebase,
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/1.5,
+                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/1.5,
+                                                                                       OperatorConstants.LEFT_X_DEADBAND),
+                                                          () -> -driveController.getRightX(),
+                                                          () -> -driveController.getRightY());
+  FPSDrive = new FPSDrive(drivebase,
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY(),
+                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX(),
+                                                                                       OperatorConstants.LEFT_X_DEADBAND),
+                                                          () -> -driveController.getRightX(), () -> true);
+
+  CreepAbsoluteDrive = new AbsoluteDrive(drivebase,
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/2,
+                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
+                                                                                       OperatorConstants.LEFT_X_DEADBAND),
+                                                          () -> -driveController.getRightX(), () -> true);
+
+FPSDrive = new FPSDrive(drivebase,
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/2,
+                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
+                                                                                       OperatorConstants.LEFT_X_DEADBAND),
+                                                          () -> -driveController.getRightX(), () -> true);
+    
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     DriverStation.silenceJoystickConnectionWarning(true);
@@ -87,26 +128,7 @@ public class RobotContainer {
 
     // Configure the trigger bindings
     configureBindings();
-
-    AbsoluteDrive = new AbsoluteDrive(drivebase,
-                                                          // Applies deadbands and inverts controls because joysticks
-                                                          // are back-right positive while robot
-                                                          // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/1.5,
-                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/1.5,
-                                                                                       OperatorConstants.LEFT_X_DEADBAND),
-                                                          () -> -driveController.getRightX(),
-                                                          () -> -driveController.getRightY());
-    FPSDrive = new FPSDrive(drivebase,
-                                                          // Applies deadbands and inverts controls because joysticks
-                                                          // are back-right positive while robot
-                                                          // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY(),
-                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX(),
-                                                                                       OperatorConstants.LEFT_X_DEADBAND),
-                                                          () -> -driveController.getRightX(), () -> true);
+    
     drivebase.setDefaultCommand(AbsoluteDrive);
 
     autChooser = AutoBuilder.buildAutoChooser();
@@ -123,27 +145,12 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // new JoystickButton(operatorController, 1).whileTrue(new RunLauncherCmd(launcher, -.9625));
-    // new JoystickButton(operatorController, 2).whileTrue(new RunLauncherCmd(launcher, .5));
-    driveController.a().whileTrue(new InstantCommand(drivebase::zeroGyro));
-    // // new JoystickButton(driveController, 7).whileTrue(new InstantCommand(drivebase.setDefaultCommand(FPSDrive)));
-    // // new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> drivebase.setDefaultCommand(AbsoluteDrive)));
-    // //new JoystickButton(driveController, 2).whileTrue(new CenterOnTagCmd(vision, drivebase, 0, 2));
+    //Driver bindings
+    //driveController.a().whileTrue(new InstantCommand(drivebase::zeroGyro));
 
-    // new JoystickButton(driveController, 5).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(7)));
-    // new JoystickButton(driveController, 6).onTrue(new InstantCommand(() -> NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0)));
-    // new JoystickButton(driveController, 3).whileTrue(new ParallelCommandGroup(new RunIntakeCmd(intake, -.9), new RunBeltCmd(launcher, -.9)));
-    // new JoystickButton(driveController, 2).whileTrue(new ParallelCommandGroup(new RunIntakeCmd(intake, .9), new RunBeltCmd(launcher, .9)));
-    // new JoystickButton(driveController, 4).onTrue(new ToggleIntakeCmd(intake));
-    // new JoystickButton(driveController,7).onTrue(new LauncherAngleCmd(launcher, 0));
-    // new JoystickButton(driveController, 8).whileTrue(new RunLauncherCmd(launcher, -.9625));
+    //driveController.leftBumper().and(() -> 
 
-    //new JoystickButton(driveController, 7).whileTrue(new InstantCommand(() -> AutoBuilder.pathfindToPose(targetPose, constraints)));
-    //new JoystickButton(driveController, 7).whileTrue(new StraightToPoseCmd(drivebase, 0, 0, 0));
-    //new JoystickButton(driveController, 7).onTrue(new PathFindToPosCmd(drivebase, pathing, new double[] {0,0,0}));
-    //new JoystickButton(driveController, 2).whileTrue(new StraightToPoseCmd(drivebase,1,0,0));
-    //new JoystickButton(driveController, 8).whileTrue(new InstantCommand(() -> SmartDashboard.putString("Current Pose", "X: "+drivebase.getPose().getX()+"\nY: "+drivebase.getPose().getY())));
-
+    //Operator bindings
     operatorController.pov(0).whileTrue(new LauncherManualAngleCmd(launcher, 1));
     operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.5));
 
