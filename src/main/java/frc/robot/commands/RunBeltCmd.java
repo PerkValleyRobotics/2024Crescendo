@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -13,16 +14,30 @@ public class RunBeltCmd extends Command {
   /** Creates a new RunIntakeCmd. */
   ConveyorSubsystem conveyor;
   double speed;
+  double minVel;
+  double time;
+
+  private Timer timer = new Timer();
+
   public RunBeltCmd(ConveyorSubsystem conveyor, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.conveyor = conveyor;
     this.speed = speed;
+    this.time = 0;
+    addRequirements(conveyor);
+  }
+
+  public RunBeltCmd(LauncherSubsystem launcher, ConveyorSubsystem conveyor, double time, double dir) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.conveyor = conveyor;
+    this.speed = .9*dir;
     addRequirements(conveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timer.start();
     conveyor.runBelt(speed);
   }
 
@@ -39,6 +54,7 @@ public class RunBeltCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (time != 0 && timer.hasElapsed(time)) return true;
     return false;
   }
 }

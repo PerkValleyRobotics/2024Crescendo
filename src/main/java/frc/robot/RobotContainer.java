@@ -80,6 +80,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 1.2));
     NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 0, .7));
     NamedCommands.registerCommand("ToggleIntakeCmd", new ToggleIntakeCmd(intake));
+    NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, .9).withTimeout(5));
+    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.8).withTimeout(5));
+    NamedCommands.registerCommand("runLauncherCmd", new RunLauncherCmd(launcher, -.9625).withTimeout(5));
+    NamedCommands.registerCommand("setLauncherTo60", new LauncherAngleCmd(launcher, ()->8.55));
 
     // Configure the trigger bindings
     configureBindings();
@@ -106,7 +110,7 @@ public class RobotContainer {
     drivebase.setDefaultCommand(AbsoluteDrive);
 
     autChooser = AutoBuilder.buildAutoChooser();
-    // SmartDashboard.putData("Auto Chooser", autChooser);
+    SmartDashboard.putData("Auto Chooser", autChooser);
   }
 
   /**
@@ -143,10 +147,10 @@ public class RobotContainer {
     operatorController.pov(0).whileTrue(new LauncherManualAngleCmd(launcher, 1));
     operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.5));
 
-    operatorController.pov(270).onTrue(new LauncherAngleCmd(launcher, 2));
-    operatorController.pov(90).onTrue(new LauncherAngleCmd(launcher, 8.55));
+    operatorController.pov(270).onTrue(new LauncherAngleCmd(launcher, () -> 2));
+    operatorController.pov(90).onTrue(new LauncherAngleCmd(launcher, () ->8.55));
 
-    operatorController.leftBumper().whileTrue(new RunLauncherCmd(launcher, .9625));
+    operatorController.leftBumper().whileTrue(new RunLauncherCmd(launcher, .9625)); //.9625
     operatorController.back().and(operatorController.leftBumper()).whileTrue(new RunLauncherCmd(launcher, -.5));
   
     operatorController.rightBumper().whileTrue(new RunBeltCmd(conveyor, -.9));
@@ -159,6 +163,8 @@ public class RobotContainer {
 
     operatorController.b().whileTrue(new ParallelCommandGroup(new RunBeltCmd(conveyor, -.9), new RunIntakeCmd(intake, -.9)));
     operatorController.back().and(operatorController.b()).whileTrue(new ParallelCommandGroup(new RunBeltCmd(conveyor, .9), new RunIntakeCmd(intake, -.9)));
+
+    operatorController.y().whileTrue(new LauncherAngleCmd(launcher, () -> -1.5349*drivebase.getPose().getX()+7));
   }
 
 

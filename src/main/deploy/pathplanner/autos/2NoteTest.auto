@@ -12,28 +12,40 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "setLauncherTo60"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": null
+                  "name": "runLauncherCmd"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": null
+                  "name": "timeIntakeCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note(02)"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Note(02)"
           }
         }
       ]
