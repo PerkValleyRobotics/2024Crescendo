@@ -12,6 +12,7 @@ import com.reduxrobotics.canand.ReduxJNI.Helper;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -91,9 +92,10 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     if (LimelightHelpers.getTV("limelight-launch") && LimelightHelpers.getTA("limelight-launch") != 0){
       Pose2d pos = LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch");
+      Pose2d betterPos = new Pose2d(new Translation2d(pos.getX(),pos.getY()), driveBase.getHeading());
       //Pose2d pos2d = new Pose2d(pos.getX(), pos.getY(), new Rotation2d(pos.getRotation().getAngle()));
       double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight-launch")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight-launch")/1000.0);
-      driveBase.updateOdometry(pos, timestamp);
+      driveBase.updateOdometry(betterPos, timestamp);
     }
     shuffle.update();
   }
