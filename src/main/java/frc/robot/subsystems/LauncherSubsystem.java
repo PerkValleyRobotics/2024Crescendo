@@ -22,8 +22,8 @@ public class LauncherSubsystem extends SubsystemBase {
   private CANSparkMax right;
   private CANSparkMax rotation;
 
-  // private SparkPIDController leftPIDController;
-  // private SparkPIDController rightPIDController;
+  private SparkPIDController leftPIDController;
+  private SparkPIDController rightPIDController;
   private SparkPIDController rotationPIDController;
 
   private RelativeEncoder leftEncoder;
@@ -46,28 +46,26 @@ public class LauncherSubsystem extends SubsystemBase {
     
     rotationPIDController = rotation.getPIDController();
   
-    // leftPIDController = left.getPIDController();
-    // rightPIDController = right.getPIDController();
+    leftPIDController = left.getPIDController();
+    rightPIDController = right.getPIDController();
 
     leftEncoder = left.getEncoder();
     rightEncoder = right.getEncoder();
     rotationEncoder = rotation.getEncoder();
 
-    // leftPIDController.setP(0);
-    // leftPIDController.setI(0);
-    // leftPIDController.setD(0);
-    // leftPIDController.setIZone(0);
-    // leftPIDController.setFF(0);
-    // leftPIDController.setOutputRange(-1, 1);
-    // leftPIDController.setSmartMotionAccelStrategy(SparkPIDController.AccelStrategy.kTrapezoidal, 0);
-    // leftPIDController.setSmartMotionAllowedClosedLoopError(0, 0);
-
-    // rightPIDController.setP(0);
-    // rightPIDController.setI(0);
-    // rightPIDController.setD(0);
-    // rightPIDController.setIZone(0);
-    // rightPIDController.setFF(0);
-    // rightPIDController.setOutputRange(-1, 1);
+    leftPIDController.setP(Constants.KLlauncherP);
+    leftPIDController.setI(Constants.KLlauncherI);
+    leftPIDController.setD(Constants.KLlauncherD);
+    leftPIDController.setIZone(Constants.KLlauncherIZ);
+    leftPIDController.setFF(Constants.KLlauncherFF);
+    leftPIDController.setOutputRange(-1, 1);
+    
+    rightPIDController.setP(Constants.KRlauncherP);
+    rightPIDController.setI(Constants.KRlauncherI);
+    rightPIDController.setD(Constants.KRlauncherD);
+    rightPIDController.setIZone(Constants.KRlauncherIZ);
+    rightPIDController.setFF(Constants.KRlauncherFF);
+    rightPIDController.setOutputRange(-1, 1);
 
     rotationPIDController.setP(Constants.KlauncherTiltP);
     rotationPIDController.setI(Constants.KlauncherTiltI);
@@ -79,31 +77,31 @@ public class LauncherSubsystem extends SubsystemBase {
     leftSet = 0;
     rightSet = 0;
 
-    rotationEncoder.setPosition(0);
+    rotationEncoder.setPosition(-2.3);
   }
 
   @Override
   public void periodic() {
-    // SmartDashboard.putNumber("Left Launcher Velo: ", leftEncoder.getVelocity());
-    // SmartDashboard.putNumber("Right Launcher Velo: ", rightEncoder.getVelocity());
-    // SmartDashboard.putNumber("Left SetRPM: ", leftSet);
-    // SmartDashboard.putNumber("Right SetRPM: ", rightSet);
+    SmartDashboard.putNumber("Left Launcher Velo: ", leftEncoder.getVelocity());
+    SmartDashboard.putNumber("Right Launcher Velo: ", rightEncoder.getVelocity());
+    SmartDashboard.putNumber("Left SetRPM: ", leftSet);
+    SmartDashboard.putNumber("Right SetRPM: ", rightSet);
   }
 
-  // public void setLeftReference(double rpm){
-  //   leftPIDController.setReference(rpm, CANSparkMax.ControlType.kVelocity); 
-  //   leftSet = rpm;
-  // }
+  public void setLeftReference(double rpm){
+    leftPIDController.setReference(rpm, CANSparkMax.ControlType.kVelocity); 
+    leftSet = rpm;
+  }
 
-  // public void setRightReference(double rpm){
-  //   rightPIDController.setReference(rpm, CANSparkMax.ControlType.kVelocity); 
-  //   rightSet = rpm;
-  // }
+  public void setRightReference(double rpm){
+    rightPIDController.setReference(rpm, CANSparkMax.ControlType.kVelocity); 
+    rightSet = rpm;
+  }
 
-  // public void setReference(double rpm){
-  //   setLeftReference(rpm);
-  //   setRightReference(rpm);
-  // }
+  public void setReference(double rpm){
+    setLeftReference(rpm);
+    setRightReference(-rpm);
+  }
 
   public void setAngle(double setpoint) {
     this.setpoint = setpoint;

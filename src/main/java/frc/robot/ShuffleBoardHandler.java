@@ -52,7 +52,7 @@ public class ShuffleBoardHandler {
 
     launcherSetpoint = launcherGrid.add("launcherSetpoint", launcher.getSetpoint()).withPosition(0,0).getEntry();
     launcherEncoder = launcherGrid.add("launcherEncoder", launcher.getAngle()).getEntry();
-    launcherVelocity = launcherGrid.add("launcherVelocity", launcher.getVelocity()[0]).getEntry();
+    launcherVelocity = launcherGrid.add("launcherVelocity", launcher.getVelocity()).getEntry();
     intakeState = tab.add("intakeState", intake.getToggle()).getEntry();
     odometryX = odometryGrid.add("odometryX", swerve.getPose().getX()).getEntry();
     odometryY = odometryGrid.add("odometryY", swerve.getPose().getY()).getEntry();

@@ -121,6 +121,68 @@
               }
             ]
           }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "timeIntakeCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "slowTimedBeltCmd"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note(03)"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Note(-03)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAngleLauncher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "timedBeltCmdRev"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "runLauncherCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
+          }
         }
       ]
     }

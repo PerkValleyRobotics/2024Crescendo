@@ -25,8 +25,7 @@ public class RunLauncherCmd extends Command {
   @Override
   public void initialize() {
     //Start the motor running at the specified Speed
-    shooter.setLeft(speed);
-    shooter.setRight(speed);
+    shooter.setReference(1000);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

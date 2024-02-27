@@ -40,6 +40,22 @@ public final class Constants {
   public static final double KlauncherTiltOutputMin = -1;
   public static final double KlauncherTiltOUtputMax = 1;
 
+  public static final double KRlauncherP = 0;
+  public static final double KRlauncherI = 0;
+  public static final double KRlauncherD = 0.00;
+  public static final double KRlauncherIZ = 0;
+  public static final double KRlauncherFF = 0.9;
+  public static final double KRlauncherOutputMin = -1;
+  public static final double KRlauncherOUtputMax = 1;
+
+  public static final double KLlauncherP = 0;
+  public static final double KLlauncherI = 0;
+  public static final double KLlauncherD = 0.00;
+  public static final double KLlauncherIZ = 0;
+  public static final double KLlauncherFF = 0.9;
+  public static final double KLlauncherOutputMin = -1;
+  public static final double KLlauncherOUtputMax = 1;
+
   public static final class Auton{
 
     public static final PIDFConfig xAutoPID     = new PIDFConfig(3, 0, 0);

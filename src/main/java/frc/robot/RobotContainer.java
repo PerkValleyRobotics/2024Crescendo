@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -76,9 +77,9 @@ private AbsoluteDrive AbsoluteDrive = new AbsoluteDrive(drivebase,
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
                                                           // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/1.75,
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY(),
                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/1.75,
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX(),
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
                                                           () -> -driveController.getRightX(),
                                                           () -> -driveController.getRightY());
@@ -123,12 +124,13 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 1.2));
     NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 0, .7));
     NamedCommands.registerCommand("ToggleIntakeCmd", new ToggleIntakeCmd(intake));
-    NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.9).withTimeout(2));
+    NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.75).withTimeout(2));
+    NamedCommands.registerCommand("slowTimedBeltCmd", new RunBeltCmd(conveyor, -.5).withTimeout(2));
     NamedCommands.registerCommand("timedBeltCmdRev", new RunBeltCmd(conveyor, .7).withTimeout(.01));
-    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.8).withTimeout(2));
+    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.8).withTimeout(1.9));
     NamedCommands.registerCommand("runLauncherCmd", new RunLauncherCmd(launcher, () -> .9625).withTimeout(2));
     NamedCommands.registerCommand("setLauncherTo60", new LauncherAngleCmd(launcher, ()->8.55));
-    NamedCommands.registerCommand("AutoAngleLauncher", new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.8));
+    NamedCommands.registerCommand("AutoAngleLauncher", new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.5));
 
     // Configure the trigger bindings
     configureBindings();
@@ -151,7 +153,13 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
   private void configureBindings() {
     //Driver bindings
     driveController.a().whileTrue(new InstantCommand(drivebase::zeroGyro));
+    driveController.x().toggleOnTrue(FPSDrive);
+    //driveController.x().toggleOnTrue(FPSDrive);
+    // driveController.b().whileTrue(CreepAbsoluteDrive);
+    // driveController.leftTrigger().and(() -> CommandScheduler.getInstance().isScheduled(AbsoluteDrive)).whileTrue(CreepAbsoluteDrive);
+    // driveController.leftTrigger().and(() -> CommandScheduler.getInstance().isScheduled(FPSDrive)).whileTrue(CreepFPSDrive);
 
+    
     //driveController.leftBumper().and(() -> 
 
     //Operator bindings
