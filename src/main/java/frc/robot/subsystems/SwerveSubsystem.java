@@ -169,7 +169,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putString("pose", this.getPose().getX() + "\nY: " + this.getPose().getY() + "\nRotation: " + this.getPose().getRotation().getDegrees());
+    // SmartDashboard.putString("pose", this.getPose().getX() + "\nY: " + this.getPose().getY() + "\nRotation: " + this.getPose().getRotation().getDegrees());
   }
 
   @Override
