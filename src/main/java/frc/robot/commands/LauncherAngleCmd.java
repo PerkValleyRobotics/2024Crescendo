@@ -25,7 +25,7 @@ public class LauncherAngleCmd extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(setPos.getAsDouble() <= 8.55 && setPos.getAsDouble() >= 0)launcher.setAngle(setPos.getAsDouble());
+    if(setPos.getAsDouble() <= 8.55 && setPos.getAsDouble() >= -2)launcher.setAngle(setPos.getAsDouble());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,6 +39,6 @@ public class LauncherAngleCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return launcher.getAngle() >= setPos.getAsDouble()-1 && launcher.getAngle() <= setPos.getAsDouble()+1;
+    return launcher.getAngle() >= setPos.getAsDouble()-.05 && launcher.getAngle() <= setPos.getAsDouble()+.1;
   }
 }

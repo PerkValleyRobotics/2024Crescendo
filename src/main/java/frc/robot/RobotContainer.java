@@ -38,6 +38,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -73,16 +75,16 @@ public class RobotContainer {
   //PathConstraints constraints = new PathConstraints(2, 4, Units.degreesToRadians(540), Units.degreesToRadians(720));
   //private Command PathPlanningCommand = AutoBuilder.pathfindToPose(targetPose, constraints,0,0);
 
-private AbsoluteDrive AbsoluteDrive = new AbsoluteDrive(drivebase,
-                                                          // Applies deadbands and inverts controls because joysticks
-                                                          // are back-right positive while robot
-                                                          // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY(),
-                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX(),
-                                                                                       OperatorConstants.LEFT_X_DEADBAND),
-                                                          () -> -driveController.getRightX(),
-                                                          () -> -driveController.getRightY());
+// private AbsoluteDrive AbsoluteDrive = new AbsoluteDrive(drivebase,
+//                                                           // Applies deadbands and inverts controls because joysticks
+//                                                           // are back-right positive while robot
+//                                                           // controls are front-left positive
+//                                                           () -> MathUtil.applyDeadband(-driveController.getLeftY(),
+//                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
+//                                                           () -> MathUtil.applyDeadband(-driveController.getLeftX(),
+//                                                                                        OperatorConstants.LEFT_X_DEADBAND),
+//                                                           () -> -driveController.getRightX(),
+//                                                           () -> -driveController.getRightY());
 private FPSDrive FPSDrive = new FPSDrive(drivebase,
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
@@ -93,16 +95,16 @@ private FPSDrive FPSDrive = new FPSDrive(drivebase,
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
                                                           () -> -driveController.getRightX(), () -> true);
 
-private AbsoluteDrive CreepAbsoluteDrive = new AbsoluteDrive(drivebase,
-                                                          // Applies deadbands and inverts controls because joysticks
-                                                          // are back-right positive while robot
-                                                          // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/2,
-                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
-                                                                                       OperatorConstants.LEFT_X_DEADBAND),
-                                                          () -> -driveController.getRightX(),
-                                                          () -> -driveController.getRightY());
+// private AbsoluteDrive CreepAbsoluteDrive = new AbsoluteDrive(drivebase,
+//                                                           // Applies deadbands and inverts controls because joysticks
+//                                                           // are back-right positive while robot
+//                                                           // controls are front-left positive
+//                                                           () -> MathUtil.applyDeadband(-driveController.getLeftY()/2,
+//                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
+//                                                           () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
+//                                                                                        OperatorConstants.LEFT_X_DEADBAND),
+//                                                           () -> -driveController.getRightX(),
+//                                                           () -> -driveController.getRightY());
 
 private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
                                                           // Applies deadbands and inverts controls because joysticks
@@ -112,7 +114,7 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
                                                           () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
-                                                          () -> -driveController.getRightX(), () -> true);
+                                                          () -> -driveController.getRightX()/2, () -> true);
     
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -135,7 +137,7 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     // Configure the trigger bindings
     configureBindings();
     
-    drivebase.setDefaultCommand(AbsoluteDrive);
+    drivebase.setDefaultCommand(FPSDrive);
 
     autChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autChooser);
@@ -153,9 +155,9 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
   private void configureBindings() {
     //Driver bindings
     driveController.a().whileTrue(new InstantCommand(drivebase::zeroGyro));
-    driveController.x().toggleOnTrue(FPSDrive);
     //driveController.x().toggleOnTrue(FPSDrive);
-    // driveController.b().whileTrue(CreepAbsoluteDrive);
+    //driveController.x().toggleOnTrue(FPSDrive);
+    driveController.leftBumper().whileTrue(CreepFPSDrive);
     // driveController.leftTrigger().and(() -> CommandScheduler.getInstance().isScheduled(AbsoluteDrive)).whileTrue(CreepAbsoluteDrive);
     // driveController.leftTrigger().and(() -> CommandScheduler.getInstance().isScheduled(FPSDrive)).whileTrue(CreepFPSDrive);
 
@@ -164,10 +166,10 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
 
     //Operator bindings
     operatorController.pov(0).whileTrue(new LauncherManualAngleCmd(launcher, 1));
-    operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.5));
+    operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.2));
 
-    operatorController.pov(270).onTrue(new LauncherAngleCmd(launcher, () -> 2));
-    operatorController.pov(90).onTrue(new LauncherAngleCmd(launcher, () ->8.55));
+    operatorController.pov(270).onTrue(new LauncherAngleCmd(launcher, () -> 1.75));
+    operatorController.pov(90).onTrue(new LauncherAngleCmd(launcher, () -> -1.3));
 
     operatorController.leftBumper().whileTrue(new RunLauncherCmd(launcher, () -> .9625)); //.9625
     operatorController.back().and(operatorController.leftBumper()).whileTrue(new RunLauncherCmd(launcher, ()->-.5));
@@ -181,22 +183,25 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     operatorController.x().onTrue(new ToggleIntakeCmd(intake)); 
 
     operatorController.b().whileTrue(new ParallelCommandGroup(new RunBeltCmd(conveyor, -.9), new RunIntakeCmd(intake, -.9)));
-    operatorController.back().and(operatorController.b()).whileTrue(new ParallelCommandGroup(new RunBeltCmd(conveyor, .9), new RunIntakeCmd(intake, -.9)));
+    operatorController.back().and(operatorController.b()).whileTrue(new ParallelCommandGroup(new RunBeltCmd(conveyor, .7), new RunIntakeCmd(intake, -.9)));
+    // operatorController.b().whileTrue(new ParallelCommandGroup(new RunBeltCmd(conveyor, .9), new RunIntakeCmd(intake, -.9)));
+    // operatorController.b().onTrue(new SequentialCommandGroup(new LauncherAngleCmd(launcher, () -> 1.6), new ToggleIntakeCmd(intake)));
+    // operatorController.b().onFalse(new ToggleIntakeCmd(intake));
 
-//     operatorController.y().whileTrue(new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.8), new AbsoluteDrive(drivebase,
-//                                                           // Applies deadbands and inverts controls because joysticks
-//                                                           // are back-right positive while robot
-//                                                           // controls are front-left positive
-//                                                           () -> MathUtil.applyDeadband(-driveController.getLeftY()/2,
-//                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
-//                                                           () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
-//                                                                                        OperatorConstants.LEFT_X_DEADBAND),
-//                                                           () -> -(0+drivebase.getPose().getX()),
-//                                                           () -> (5.55-drivebase.getPose().getY()))
-// ));
+    operatorController.y().whileTrue(new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.8), new AbsoluteDrive(drivebase,
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftY()/2,
+                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
+                                                          () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
+                                                                                       OperatorConstants.LEFT_X_DEADBAND),
+                                                          () -> (drivebase.triangulateDistanceToSpeaker(false)*Math.sin(drivebase.getAngleToSpeaker(false))),
+                                                          () -> (drivebase.triangulateDistanceToSpeaker(false)*Math.cos(drivebase.getAngleToSpeaker(false))))
+));
 // //10.9895
-operatorController.y().whileTrue(new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.8));
-    operatorController.start().onTrue(new InstantCommand(launcher::resetEncoder));
+// operatorController.y().whileTrue(new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.8));
+//     operatorController.start().onTrue(new InstantCommand(launcher::resetEncoder));
   }
 
 

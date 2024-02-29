@@ -32,9 +32,9 @@ public final class Constants {
   public static final int KRightLauncherMotorID = 10;
 
   // launcher tint PID
-  public static final double KlauncherTiltP = 0.075;
-  public static final double KlauncherTiltI = 0;
-  public static final double KlauncherTiltD = 0.00;
+  public static final double KlauncherTiltP = 0.09;
+  public static final double KlauncherTiltI = 0.0001;
+  public static final double KlauncherTiltD = 0.012;
   public static final double KlauncherTiltIZ = 0;
   public static final double KlauncherTiltFF = 0;
   public static final double KlauncherTiltOutputMin = -1;
