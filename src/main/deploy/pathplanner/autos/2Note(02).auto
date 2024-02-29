@@ -5,7 +5,7 @@
       "x": 1.4,
       "y": 5.55
     },
-    "rotation": 0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -14,13 +14,100 @@
         {
           "type": "named",
           "data": {
+            "name": "AutoAngleLauncher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runLauncherCmd"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "runLauncherCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ToggleIntakeCmd"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "slowTimedBeltCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timeIntakeCmd"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Note(02)"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Note(02)"
+            "pathName": "Note(-02)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAngleLauncher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runLauncherCmd"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "runLauncherCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
           }
         },
         {

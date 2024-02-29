@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.*;
+import frc.robot.commands.AprilLauncherSetCmd;
 import frc.robot.commands.CenterOnTagCmd;
 import frc.robot.commands.LauncherAngleCmd;
 import frc.robot.commands.LauncherManualAngleCmd;
@@ -129,10 +130,12 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.75).withTimeout(2));
     NamedCommands.registerCommand("slowTimedBeltCmd", new RunBeltCmd(conveyor, -.5).withTimeout(2));
     NamedCommands.registerCommand("timedBeltCmdRev", new RunBeltCmd(conveyor, .7).withTimeout(.01));
-    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.8).withTimeout(1.9));
+    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.8).withTimeout(3));
     NamedCommands.registerCommand("runLauncherCmd", new RunLauncherCmd(launcher, () -> .9625).withTimeout(2));
     NamedCommands.registerCommand("setLauncherTo60", new LauncherAngleCmd(launcher, ()->8.55));
     NamedCommands.registerCommand("AutoAngleLauncher", new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.5));
+    NamedCommands.registerCommand("resetLauncher", new LauncherAngleCmd(launcher, () -> 0));
+    NamedCommands.registerCommand("AprilAim", new AprilLauncherSetCmd(vision, drivebase));
 
     // Configure the trigger bindings
     configureBindings();

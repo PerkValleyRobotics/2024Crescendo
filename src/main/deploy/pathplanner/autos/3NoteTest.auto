@@ -20,6 +20,12 @@
         {
           "type": "named",
           "data": {
+            "name": "AprilAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "AutoAngleLauncher"
           }
         },
@@ -88,6 +94,12 @@
         {
           "type": "named",
           "data": {
+            "name": "AprilAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "AutoAngleLauncher"
           }
         },
@@ -148,9 +160,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "resetLauncher"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Note(-03)"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AprilAim"
           }
         },
         {
