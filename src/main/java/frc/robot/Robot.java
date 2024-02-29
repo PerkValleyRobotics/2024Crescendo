@@ -68,12 +68,12 @@ public class Robot extends TimedRobot {
 
     shuffle.setUp();
 
-    // if (LimelightHelpers.getTV("limelight-launch") && LimelightHelpers.getTA("limelight-launch") != 0){
-    //   Pose2d pos = LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch");
-    //   //Pose2d pos2d = new Pose2d(pos.getX(), pos.getY(), new Rotation2d(pos.getRotation().getAngle()));
-    //   double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight-launch")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight-launch")/1000.0);
-    //   driveBase.updateOdometry(pos, timestamp);
-    // }
+    if (LimelightHelpers.getTV("limelight-launch") && LimelightHelpers.getTA("limelight-launch") != 0){
+      Pose2d pos = LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch");
+      //Pose2d pos2d = new Pose2d(pos.getX(), pos.getY(), new Rotation2d(pos.getRotation().getAngle()));
+      double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight-launch")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight-launch")/1000.0);
+      driveBase.updateOdometry(pos, timestamp);
+    }
   }
 
   /**
