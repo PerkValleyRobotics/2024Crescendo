@@ -130,7 +130,7 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.75).withTimeout(2));
     NamedCommands.registerCommand("slowTimedBeltCmd", new RunBeltCmd(conveyor, -.5).withTimeout(2));
     NamedCommands.registerCommand("timedBeltCmdRev", new RunBeltCmd(conveyor, .7).withTimeout(.01));
-    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.8).withTimeout(3));
+    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.9).withTimeout(2.5));
     NamedCommands.registerCommand("runLauncherCmd", new RunLauncherCmd(launcher, () -> .9625).withTimeout(2));
     NamedCommands.registerCommand("setLauncherTo60", new LauncherAngleCmd(launcher, ()->8.55));
     NamedCommands.registerCommand("AutoAngleLauncher", new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.5));
@@ -169,7 +169,7 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
 
     //Operator bindings
     operatorController.pov(0).whileTrue(new LauncherManualAngleCmd(launcher, 1));
-    operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.2));
+    operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.5));
 
     operatorController.pov(270).onTrue(new LauncherAngleCmd(launcher, () -> 1.75));
     operatorController.pov(90).onTrue(new LauncherAngleCmd(launcher, () -> -1.3));
@@ -199,12 +199,12 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
                                                           () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
                                                                                        OperatorConstants.LEFT_X_DEADBAND),
-                                                          () -> (drivebase.triangulateDistanceToSpeaker(false)*Math.sin(drivebase.getAngleToSpeaker(false))),
-                                                          () -> (drivebase.triangulateDistanceToSpeaker(false)*Math.cos(drivebase.getAngleToSpeaker(false))))
+                                                          () -> -(drivebase.triangulateDistanceToSpeaker(false)*Math.sin(drivebase.getAngleToSpeaker(false))),
+                                                          () -> -(drivebase.triangulateDistanceToSpeaker(false)*Math.cos(drivebase.getAngleToSpeaker(false))))
 ));
 // //10.9895
-// operatorController.y().whileTrue(new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.8));
-//     operatorController.start().onTrue(new InstantCommand(launcher::resetEncoder));
+    // operatorController.y().whileTrue(new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker(false)+9.8));
+    operatorController.start().onTrue(new InstantCommand(launcher::resetEncoder));
   }
 
 

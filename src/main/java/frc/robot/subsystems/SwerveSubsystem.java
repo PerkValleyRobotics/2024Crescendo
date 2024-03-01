@@ -10,7 +10,6 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
@@ -361,6 +360,6 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public double getAngleToSpeaker(boolean blueSide) {
-    return Math.atan2(Math.abs(5.55-this.getPose().getY()), this.getPose().getX());
+    return Math.atan2(this.getPose().getY()-5.55, this.getPose().getX());
   }
 }

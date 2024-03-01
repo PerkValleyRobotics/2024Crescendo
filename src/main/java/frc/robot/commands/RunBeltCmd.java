@@ -7,8 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ConveyorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LauncherSubsystem;
 
 public class RunBeltCmd extends Command {
   /** Creates a new RunIntakeCmd. */
@@ -24,13 +22,6 @@ public class RunBeltCmd extends Command {
     this.conveyor = conveyor;
     this.speed = speed;
     this.time = 0;
-    addRequirements(conveyor);
-  }
-
-  public RunBeltCmd(LauncherSubsystem launcher, ConveyorSubsystem conveyor, double time, double dir) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.conveyor = conveyor;
-    this.speed = .9*dir;
     addRequirements(conveyor);
   }
 

@@ -74,6 +74,9 @@ public class Robot extends TimedRobot {
       double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight-launch")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight-launch")/1000.0);
       driveBase.updateOdometry(pos, timestamp);
     }
+    // Pose2d pos2d = new Pose2d(1, 52, new Rotation2d(0));
+    // double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight-launch")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight-launch")/1000.0);
+    // driveBase.updateOdometry(pos2d, timestamp);
   }
 
   /**

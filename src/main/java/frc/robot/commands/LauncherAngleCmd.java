@@ -39,6 +39,6 @@ public class LauncherAngleCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return launcher.getAngle() >= setPos.getAsDouble()-.05 && launcher.getAngle() <= setPos.getAsDouble()+.1;
+    return launcher.getAngle() >= setPos.getAsDouble()-.075 && launcher.getAngle() <= setPos.getAsDouble()+.1;
   }
 }
