@@ -8,11 +8,15 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
+import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -355,11 +359,26 @@ public class SwerveSubsystem extends SubsystemBase {
     swerveDrive.addVisionMeasurement(pos, timestamp);
   }
 
-  public double triangulateDistanceToSpeaker(boolean blueSide) {
-    return Math.sqrt(Math.pow(0+this.getPose().getX(),2)+Math.pow(5.55-this.getPose().getY(),2));
+   private Optional<Alliance> ally = DriverStation.getAlliance();
+
+  public double triangulateDistanceToSpeaker() {
+    // return SmartDashboard.putBoolean("testColorThing", SmartDashboard.getString("driverColor", "Blue")=="Blue")?
+    //       Math.sqrt(Math.pow(0+this.getPose().getX(),2)+Math.pow(5.55-this.getPose().getY(),2)):
+    //       Math.sqrt(Math.pow(this.getPose().getX(),2)+Math.pow(5.55-this.getPose().getY(),2));
+    // return Math.sqrt(Math.pow(0+this.getPose().getX(),2)+Math.pow(5.55-this.getPose().getY(),2));
+    ally = DriverStation.getAlliance();
+    return ally.isPresent()?(ally.get()==Alliance.Blue?
+          this.getPose().getTranslation().getDistance(new Translation2d(0, 5.55)): //Blue
+          this.getPose().getTranslation().getDistance(new Translation2d(16.5, 5.55))): //Red
+          this.getPose().getTranslation().getDistance(new Translation2d(0, 5.55)); //Blue
   }
 
-  public double getAngleToSpeaker(boolean blueSide) {
-    return Math.atan2(this.getPose().getY()-5.55, this.getPose().getX());
+  public double getAngleToSpeaker() {
+    ally = DriverStation.getAlliance();
+    return ally.isPresent()?(ally.get()==Alliance.Blue?
+          Math.atan2(this.getPose().getY()-5.55, this.getPose().getX()): //Blue
+          Math.atan2(this.getPose().getY()-5.55, 16.5-this.getPose().getX())): //Red
+          Math.atan2(this.getPose().getY()-5.55, this.getPose().getX()); //Blue
+    // return Math.atan2(this.getPose().getY()-5.55, this.getPose().getX());
   }
 }

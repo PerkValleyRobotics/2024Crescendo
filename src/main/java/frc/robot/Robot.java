@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import com.reduxrobotics.canand.ReduxJNI.Helper;
 
@@ -15,6 +16,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -69,7 +72,8 @@ public class Robot extends TimedRobot {
     shuffle.setUp();
 
     if (LimelightHelpers.getTV("limelight-launch") && LimelightHelpers.getTA("limelight-launch") != 0){
-      Pose2d pos = LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch");
+      Pose2d pos = ally.isPresent()?(ally.get()==Alliance.Blue?LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch"):LimelightHelpers.getBotPose2d_wpiRed("limelight-launch")):LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch");
+      //Pose2d betterPos = new Pose2d(new Translation2d(pos.getX(),pos.getY()), driveBase.getHeading());
       //Pose2d pos2d = new Pose2d(pos.getX(), pos.getY(), new Rotation2d(pos.getRotation().getAngle()));
       double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight-launch")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight-launch")/1000.0);
       driveBase.updateOdometry(pos, timestamp);
@@ -83,9 +87,11 @@ public class Robot extends TimedRobot {
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+  //  * <p>This runs after the mode specific periodic functions, but before LiveWindow and
    * SmartDashboard integrated updating.
    */
+  private Optional<Alliance> ally = DriverStation.getAlliance();
+
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
@@ -93,13 +99,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    if (LimelightHelpers.getTV("limelight-launch") && LimelightHelpers.getTA("limelight-launch") != 0){
-      Pose2d pos = LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch");
-      Pose2d betterPos = new Pose2d(new Translation2d(pos.getX(),pos.getY()), driveBase.getHeading());
-      //Pose2d pos2d = new Pose2d(pos.getX(), pos.getY(), new Rotation2d(pos.getRotation().getAngle()));
-      double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight-launch")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight-launch")/1000.0);
-      driveBase.updateOdometry(betterPos, timestamp);
-    }
+    
     shuffle.update();
   }
 
@@ -155,7 +155,15 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if (LimelightHelpers.getTV("limelight-launch") && LimelightHelpers.getTA("limelight-launch") != 0){
+      Pose2d pos = ally.isPresent()?(ally.get()==Alliance.Blue?LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch"):LimelightHelpers.getBotPose2d_wpiRed("limelight-launch")):LimelightHelpers.getBotPose2d_wpiBlue("limelight-launch");
+      Pose2d betterPos = new Pose2d(new Translation2d(pos.getX(),pos.getY()), driveBase.getHeading());
+      //Pose2d pos2d = new Pose2d(pos.getX(), pos.getY(), new Rotation2d(pos.getRotation().getAngle()));
+      double timestamp = Timer.getFPGATimestamp() - (LimelightHelpers.getLatency_Pipeline("limelight-launch")/1000.0) - (LimelightHelpers.getLatency_Capture("limelight-launch")/1000.0);
+      driveBase.updateOdometry(betterPos, timestamp);
+    }
+  }
 
   @Override
   public void testInit() {

@@ -14,11 +14,13 @@ public class LauncherAngleCmd extends Command {
   LauncherSubsystem launcher;
   DoubleSupplier setPos;
 
+  private boolean isAuto;
 
-  public LauncherAngleCmd(LauncherSubsystem launcher, DoubleSupplier setPos) {
+  public LauncherAngleCmd(LauncherSubsystem launcher, DoubleSupplier setPos, boolean isAuto) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.launcher = launcher;
     this.setPos = setPos;
+    this.isAuto = isAuto;
     addRequirements(launcher);
   }
 
@@ -39,6 +41,7 @@ public class LauncherAngleCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return launcher.getAngle() >= setPos.getAsDouble()-.075 && launcher.getAngle() <= setPos.getAsDouble()+.1;
+    return isAuto?launcher.getAngle() >= setPos.getAsDouble()-.075 && launcher.getAngle() <= setPos.getAsDouble()+.1:
+                  launcher.getAngle() >= setPos.getAsDouble()-.12 && launcher.getAngle() <= setPos.getAsDouble()+.12;
   }
 }
