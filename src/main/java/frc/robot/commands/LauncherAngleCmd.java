@@ -15,19 +15,33 @@ public class LauncherAngleCmd extends Command {
   DoubleSupplier setPos;
 
   private boolean isAuto;
+  private boolean spinUp;
 
   public LauncherAngleCmd(LauncherSubsystem launcher, DoubleSupplier setPos, boolean isAuto) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.launcher = launcher;
     this.setPos = setPos;
     this.isAuto = isAuto;
+    this.spinUp = false;
+    addRequirements(launcher);
+  }
+
+  public LauncherAngleCmd(LauncherSubsystem launcher, DoubleSupplier setPos, boolean spinUp, boolean isAuto) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.launcher = launcher;
+    this.setPos = setPos;
+    this.isAuto = isAuto;
+    this.spinUp = spinUp;
     addRequirements(launcher);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(setPos.getAsDouble() <= 8.55 && setPos.getAsDouble() >= -2)launcher.setAngle(setPos.getAsDouble());
+    if(setPos.getAsDouble() <= 8.55 && setPos.getAsDouble() >= -2) {
+      if (this.setPos != null)launcher.setAngle(setPos.getAsDouble());
+      if (this.spinUp) launcher.setReference(1000);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

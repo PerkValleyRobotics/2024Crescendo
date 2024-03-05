@@ -136,6 +136,15 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     NamedCommands.registerCommand("AutoAngleLauncher", new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, true).withTimeout(1));
     NamedCommands.registerCommand("resetLauncher", new LauncherAngleCmd(launcher, () -> 0, true).withTimeout(1));
     NamedCommands.registerCommand("fixedDown", new LauncherAngleCmd(launcher,() ->  -1.0, true).withTimeout(1));
+    NamedCommands.registerCommand("startAim", new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, false), new AbsoluteDrive(drivebase,
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> 0,
+                                                          () -> 0,
+                                                          () -> -(drivebase.triangulateDistanceToSpeaker()*Math.sin(drivebase.getAngleToSpeaker())),
+                                                          () -> -(drivebase.triangulateDistanceToSpeaker()*Math.cos(drivebase.getAngleToSpeaker())))
+).withTimeout(1));
     // NamedCommands.registerCommand("AprilAim", new AprilLauncherSetCmd(vision, drivebase));
 
     // Configure the trigger bindings
@@ -192,20 +201,20 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     // operatorController.b().onTrue(new SequentialCommandGroup(new LauncherAngleCmd(launcher, () -> 1.6), new ToggleIntakeCmd(intake)));
     // operatorController.b().onFalse(new ToggleIntakeCmd(intake));
 
-//     operatorController.y().whileTrue(new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -2.24601*drivebase.triangulateDistanceToSpeaker()+9.8), new AbsoluteDrive(drivebase,
-//                                                           // Applies deadbands and inverts controls because joysticks
-//                                                           // are back-right positive while robot
-//                                                           // controls are front-left positive
-//                                                           () -> MathUtil.applyDeadband(-driveController.getLeftY()/2,
-//                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
-//                                                           () -> MathUtil.applyDeadband(-driveController.getLeftX()/2,
-//                                                                                        OperatorConstants.LEFT_X_DEADBAND),
-//                                                           () -> -(drivebase.triangulateDistanceToSpeaker()*Math.sin(drivebase.getAngleToSpeaker())),
-//                                                           () -> -(drivebase.triangulateDistanceToSpeaker()*Math.cos(drivebase.getAngleToSpeaker())))
-// ));
+    operatorController.y().toggleOnTrue(new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, true, false), new AbsoluteDrive(drivebase,
+                                                          // Applies deadbands and inverts controls because joysticks
+                                                          // are back-right positive while robot
+                                                          // controls are front-left positive
+                                                          () -> MathUtil.applyDeadband(-operatorController.getLeftY()/1.5,
+                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
+                                                          () -> MathUtil.applyDeadband(-operatorController.getLeftX()/1.5,
+                                                                                       OperatorConstants.LEFT_X_DEADBAND),
+                                                          () -> -(drivebase.triangulateDistanceToSpeaker()*Math.sin(drivebase.getAngleToSpeaker())),
+                                                          () -> -(drivebase.triangulateDistanceToSpeaker()*Math.cos(drivebase.getAngleToSpeaker())))
+));
 
 // //10.9895
-    operatorController.y().whileTrue(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, false));
+    // operatorController.y().whileTrue(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, false));
     operatorController.start().onTrue(new InstantCommand(launcher::resetEncoder));
   }
 

@@ -1,0 +1,248 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.2888463383764373,
+      "y": 5.5430292057165325
+    },
+    "rotation": -0.7772692363926347
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAngleLauncher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runLauncherCmd"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "runLauncherCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "resetLauncher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ToggleIntakeCmd"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Bottom"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "runIntakeCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "timedBeltCmdRev"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "startAim"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "runLauncherCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "resetLauncher"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BottomToMid"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timeIntakeCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "timedBeltCmdRev"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "startAim"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "runLauncherCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "resetLauncher"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timeIntakeCmd"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MidToTop"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "timedBeltCmdRev"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "startAim"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "runLauncherCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
