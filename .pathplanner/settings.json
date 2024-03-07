@@ -3,7 +3,8 @@
   "robotLength": 0.74,
   "holonomicMode": true,
   "pathFolders": [
-    "3AutoAimPaths"
+    "3AutoAimPaths",
+    "3CenterPaths"
   ],
   "autoFolders": [],
   "defaultMaxVel": 1.5,

@@ -5,10 +5,13 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.reduxrobotics.sensors.canandcolor.CanandcolorProximityConfig.SamplingPeriod;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -40,6 +43,9 @@ public class ShuffleBoardHandler {
 
   // private boolean isAddedLimelightLaunch;
   // private boolean isAddedCam0;
+
+  // private Encoder revE = new Encoder(0);
+  private DutyCycleEncoder revE = new DutyCycleEncoder(0);
 
   public ShuffleBoardHandler() {
     tab = Shuffleboard.getTab("Happy");
@@ -78,6 +84,8 @@ public class ShuffleBoardHandler {
   }
 
   public void update() {
+    SmartDashboard.putNumber("revEAbsolute",revE.getAbsolutePosition());
+
     ally = DriverStation.getAlliance();
 
     launcherSetpoint.setDouble(launcher.getSetpoint());
