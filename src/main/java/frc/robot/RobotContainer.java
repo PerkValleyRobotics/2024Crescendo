@@ -58,7 +58,7 @@ public class RobotContainer {
   private final LauncherSubsystem launcher = LauncherSubsystem.getInstance();
   private final IntakeSubsystem intake = IntakeSubsystem.getInstance();
   private final ConveyorSubsystem conveyor = ConveyorSubsystem.getInstance();
-  private final ShuffleBoardHandler ShuffleBoardHandler = new ShuffleBoardHandler();
+  // private final ShuffleBoardHandler ShuffleBoardHandler = new ShuffleBoardHandler();
   //private final PathfindingSubsystem pathing = new PathfindingSubsystem(0, 0);
   // private final AbsoluteDrive AbsoluteDrive;
   // private final FPSDrive FPSDrive;

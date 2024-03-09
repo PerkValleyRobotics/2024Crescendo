@@ -56,6 +56,8 @@ public class ShuffleBoardHandler {
     vision = VisionSubsystem.getInstance();
 
     CameraServer.startAutomaticCapture();
+
+    
   }
 
   public void setUp() {
