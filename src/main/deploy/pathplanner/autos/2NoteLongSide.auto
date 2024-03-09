@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7859976973515199,
-      "y": 4.478861151454497
+      "x": 0.7600330200660403,
+      "y": 4.520398239870554
     },
-    "rotation": -61.260204708311974
+    "rotation": -59.94038732515307
   },
   "command": {
     "type": "sequential",
@@ -14,13 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoAngleLauncher"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "runLauncherCmd"
+            "name": "launch"
           }
         },
         {
@@ -28,9 +22,15 @@
           "data": {
             "commands": [
               {
+                "type": "path",
+                "data": {
+                  "pathName": "LongSideNote"
+                }
+              },
+              {
                 "type": "named",
                 "data": {
-                  "name": "runLauncherCmd"
+                  "name": "timeIntakeCmd"
                 }
               },
               {
@@ -43,20 +43,20 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "resetLauncher"
+            "pathName": "LongSideNoteBack"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "1NoteSide"
+            "name": "launch"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "2NoteAutos",
   "choreoAuto": false
 }

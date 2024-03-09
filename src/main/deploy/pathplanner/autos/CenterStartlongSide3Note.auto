@@ -1,0 +1,99 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.289429657244114,
+      "y": 5.537862667174266
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timeIntakeCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterToLongSideNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timeIntakeCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "longSideNoteToCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "3NoteAutos",
+  "choreoAuto": false
+}

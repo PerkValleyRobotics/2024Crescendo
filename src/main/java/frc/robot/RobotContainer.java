@@ -10,6 +10,7 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.CenterOnTagCmd;
 import frc.robot.commands.LauncherAngleCmd;
 import frc.robot.commands.LauncherManualAngleCmd;
+import frc.robot.commands.LuanchCmd;
 import frc.robot.commands.RunBeltCmd;
 // import frc.robot.commands.RunBeltCmd;
 import frc.robot.commands.RunIntakeCmd;
@@ -124,6 +125,7 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
 
     //auton commands
     NamedCommands.registerCommand("print", new PrintCommand("Hello World"));
+    NamedCommands.registerCommand("launch", new LuanchCmd(launcher, conveyor, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2));
     NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 1.2));
     NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 0, .7));
     NamedCommands.registerCommand("ToggleIntakeCmd", new ToggleIntakeCmd(intake));

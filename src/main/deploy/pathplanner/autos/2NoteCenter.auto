@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7859976973515199,
-      "y": 4.478861151454497
+      "x": 1.3,
+      "y": 5.55
     },
-    "rotation": -61.260204708311974
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,13 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoAngleLauncher"
+            "name": "ToggleIntakeCmd"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "runLauncherCmd"
+            "name": "launch"
           }
         },
         {
@@ -28,9 +28,15 @@
           "data": {
             "commands": [
               {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterNote"
+                }
+              },
+              {
                 "type": "named",
                 "data": {
-                  "name": "runLauncherCmd"
+                  "name": "timeIntakeCmd"
                 }
               },
               {
@@ -43,20 +49,20 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "resetLauncher"
+            "pathName": "Back"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "1NoteSide"
+            "name": "launch"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "2NoteAutos",
   "choreoAuto": false
 }
