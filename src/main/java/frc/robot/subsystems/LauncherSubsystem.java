@@ -9,6 +9,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,9 +27,12 @@ public class LauncherSubsystem extends SubsystemBase {
   private SparkPIDController rightPIDController;
   private SparkPIDController rotationPIDController;
 
+  private PIDController pivotAbs;
+
   private RelativeEncoder leftEncoder;
   private RelativeEncoder rightEncoder;
   private RelativeEncoder rotationEncoder;
+  private DutyCycleEncoder revE = new DutyCycleEncoder(0);
 
   private double leftSet;
   private double rightSet;
@@ -37,6 +42,9 @@ public class LauncherSubsystem extends SubsystemBase {
     left = new CANSparkMax(Constants.KLeftLauncherMotorID, MotorType.kBrushless);
     right = new CANSparkMax(Constants.KRightLauncherMotorID, MotorType.kBrushless);
     rotation = new CANSparkMax(Constants.KLauncherPivotMotorID,MotorType.kBrushless);
+    // rotation = new CANSparkMax(revE,MotorType.kBrushless);
+    // left.set
+    pivotAbs = new PIDController(0.075, 0, 0);
 
 
     left.restoreFactoryDefaults();
@@ -81,10 +89,17 @@ public class LauncherSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Left Launcher Velo: ", leftEncoder.getVelocity());
-    SmartDashboard.putNumber("Right Launcher Velo: ", rightEncoder.getVelocity());
+    // SmartDashboard.putNumber("Left Launcher Velo: ", leftEncoder.getVelocity());
+    // SmartDashboard.putNumber("Right Launcher Velo: ", rightEncoder.getVelocity());
     SmartDashboard.putNumber("Left SetRPM: ", leftSet);
     SmartDashboard.putNumber("Right SetRPM: ", rightSet);
+  }
+
+  public void setPivotAbsRef(double pos) {
+    pivotAbs.setSetpoint(pos);
+  }
+  public void calcSetAbs() {
+    rotation.set(pivotAbs.calculate(revE.getAbsolutePosition()));
   }
 
   public void setLeftReference(double rpm){

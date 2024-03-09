@@ -57,6 +57,12 @@
         {
           "type": "named",
           "data": {
+            "name": "timedBeltCmdRev"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "launch"
           }
         },
@@ -89,6 +95,12 @@
           "type": "path",
           "data": {
             "pathName": "ShortSideNoteToCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "timedBeltCmdRev"
           }
         },
         {

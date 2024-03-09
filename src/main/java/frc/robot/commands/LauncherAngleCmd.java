@@ -38,15 +38,18 @@ public class LauncherAngleCmd extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(setPos.getAsDouble() <= 8.55 && setPos.getAsDouble() >= -2) {
-      if (this.setPos != null)launcher.setAngle(setPos.getAsDouble());
-      if (this.spinUp) launcher.setReference(1000);
-    }
+    // if(setPos.getAsDouble() <= 8.55 && setPos.getAsDouble() >= -2) {
+    //   if (this.setPos != null)launcher.setAngle(setPos.getAsDouble());
+    //   if (this.spinUp) launcher.setReference(1000);
+    // }
+    launcher.setPivotAbsRef(0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    launcher.calcSetAbs();
+  }
 
   // Called once the command ends or is interrupted.
   @Override

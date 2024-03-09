@@ -45,7 +45,6 @@ public class ShuffleBoardHandler {
   // private boolean isAddedCam0;
 
   // private Encoder revE = new Encoder(0);
-  private DutyCycleEncoder revE = new DutyCycleEncoder(0);
 
   public ShuffleBoardHandler() {
     tab = Shuffleboard.getTab("Happy");
@@ -86,7 +85,7 @@ public class ShuffleBoardHandler {
   }
 
   public void update() {
-    SmartDashboard.putNumber("revEAbsolute",revE.getAbsolutePosition());
+    // SmartDashboard.putNumber("revEAbsolute",revE.getAbsolutePosition());
 
     ally = DriverStation.getAlliance();
 

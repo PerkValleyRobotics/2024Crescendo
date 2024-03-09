@@ -129,9 +129,9 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 1.2));
     NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 0, .7));
     NamedCommands.registerCommand("ToggleIntakeCmd", new ToggleIntakeCmd(intake));
-    NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.75).withTimeout(2));
-    NamedCommands.registerCommand("slowTimedBeltCmd", new RunBeltCmd(conveyor, -.5).withTimeout(2));
-    NamedCommands.registerCommand("timedBeltCmdRev", new RunBeltCmd(conveyor, .7).withTimeout(.01));
+    NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.65).withTimeout(1));
+    NamedCommands.registerCommand("slowTimedBeltCmd", new RunBeltCmd(conveyor, -.5).withTimeout(1));
+    NamedCommands.registerCommand("timedBeltCmdRev", new RunBeltCmd(conveyor, .5).withTimeout(.175));
     NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.9).withTimeout(2.5));
     NamedCommands.registerCommand("runLauncherCmd", new RunLauncherCmd(launcher, () -> .9625).withTimeout(2));
     NamedCommands.registerCommand("setLauncherTo60", new LauncherAngleCmd(launcher, ()->8.55, true));
