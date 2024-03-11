@@ -32,7 +32,7 @@ public class LauncherSubsystem extends SubsystemBase {
   private RelativeEncoder leftEncoder;
   private RelativeEncoder rightEncoder;
   private RelativeEncoder rotationEncoder;
-  private DutyCycleEncoder revE = new DutyCycleEncoder(0);
+  // private DutyCycleEncoder revE = new DutyCycleEncoder(0);
 
   private double leftSet;
   private double rightSet;
@@ -44,7 +44,7 @@ public class LauncherSubsystem extends SubsystemBase {
     rotation = new CANSparkMax(Constants.KLauncherPivotMotorID,MotorType.kBrushless);
     // rotation = new CANSparkMax(revE,MotorType.kBrushless);
     // left.set
-    pivotAbs = new PIDController(0.075, 0, 0);
+    // pivotAbs = new PIDController(0.075, 0, 0);
 
 
     left.restoreFactoryDefaults();
@@ -95,12 +95,12 @@ public class LauncherSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Right SetRPM: ", rightSet);
   }
 
-  public void setPivotAbsRef(double pos) {
-    pivotAbs.setSetpoint(pos);
-  }
-  public void calcSetAbs() {
-    rotation.set(pivotAbs.calculate(revE.getAbsolutePosition()));
-  }
+  // public void setPivotAbsRef(double pos) {
+  //   pivotAbs.setSetpoint(pos);
+  // }
+  // public void calcSetAbs() {
+  //   rotation.set(pivotAbs.calculate(revE.getAbsolutePosition()));
+  // }
 
   public void setLeftReference(double rpm){
     leftPIDController.setReference(rpm, CANSparkMax.ControlType.kVelocity); 

@@ -85,7 +85,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "timeIntakeCmd"
+                  "name": "longRangeIntakeCmd"
                 }
               }
             ]

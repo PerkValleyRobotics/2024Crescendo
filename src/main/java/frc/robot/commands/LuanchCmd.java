@@ -9,6 +9,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ConveyorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -16,13 +17,14 @@ import frc.robot.subsystems.LauncherSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class LuanchCmd extends SequentialCommandGroup {
   /** Creates a new LuanchCmd. */
-  public LuanchCmd(LauncherSubsystem launcher, ConveyorSubsystem conveyor, DoubleSupplier angle) {
+  public LuanchCmd(IntakeSubsystem intake, LauncherSubsystem launcher, ConveyorSubsystem conveyor, DoubleSupplier angle) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new LauncherAngleCmd(launcher, angle, true, true).withTimeout(1), 
+    addCommands(new LauncherAngleCmd(launcher, angle, true, false).withTimeout(.75), 
                 new ParallelCommandGroup(
-                  new RunLauncherCmd(launcher, () -> 0.9625).withTimeout(2),
-                  new RunBeltCmd(conveyor, -.75).withTimeout(2)),
-                new LauncherAngleCmd(launcher, () -> 0, true));
+                new RunIntakeCmd(intake, -.7).withTimeout(0.5),
+                new RunLauncherCmd(launcher, () -> 0.9625).withTimeout(.5),
+                new RunBeltCmd(conveyor, -.75).withTimeout(.5)),
+                new LauncherAngleCmd(launcher, () -> 1.5, false).withTimeout(.5));
   }
 }

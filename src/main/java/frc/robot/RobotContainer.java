@@ -125,19 +125,20 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
 
     //auton commands
     NamedCommands.registerCommand("print", new PrintCommand("Hello World"));
-    NamedCommands.registerCommand("launch", new LuanchCmd(launcher, conveyor, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2));
-    NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 1.2));
-    NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 0, .7));
+    NamedCommands.registerCommand("launch", new LuanchCmd(intake, launcher, conveyor, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2));
+    // NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 1.2));
+    // NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 0, .7));
     NamedCommands.registerCommand("ToggleIntakeCmd", new ToggleIntakeCmd(intake));
-    NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.65).withTimeout(1));
+    NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.65).withTimeout(.75));
     NamedCommands.registerCommand("slowTimedBeltCmd", new RunBeltCmd(conveyor, -.5).withTimeout(1));
     NamedCommands.registerCommand("timedBeltCmdRev", new RunBeltCmd(conveyor, .5).withTimeout(.175));
-    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.9).withTimeout(2.5));
-    NamedCommands.registerCommand("runLauncherCmd", new RunLauncherCmd(launcher, () -> .9625).withTimeout(2));
+    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.9).withTimeout(1.5));
+    NamedCommands.registerCommand("longRangeIntakeCmd", new RunIntakeCmd(intake, -.9).withTimeout(2.1));
+    NamedCommands.registerCommand("runLauncherCmd", new RunLauncherCmd(launcher, () -> .9625).withTimeout(.75));
     NamedCommands.registerCommand("setLauncherTo60", new LauncherAngleCmd(launcher, ()->8.55, true));
-    NamedCommands.registerCommand("AutoAngleLauncher", new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, true).withTimeout(1));
-    NamedCommands.registerCommand("resetLauncher", new LauncherAngleCmd(launcher, () -> 0, true).withTimeout(1));
-    NamedCommands.registerCommand("fixedDown", new LauncherAngleCmd(launcher,() ->  -1.0, true).withTimeout(1));
+    NamedCommands.registerCommand("AutoAngleLauncher", new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, false).withTimeout(.75));
+    NamedCommands.registerCommand("resetLauncher", new LauncherAngleCmd(launcher, () -> 1.5, true).withTimeout(.5));
+    NamedCommands.registerCommand("fixedDown", new LauncherAngleCmd(launcher,() ->  2, true).withTimeout(.5));
     NamedCommands.registerCommand("startAim", new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, false), new AbsoluteDrive(drivebase,
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
