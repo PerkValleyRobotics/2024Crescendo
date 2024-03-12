@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9719127324240406,
-        "y": 4.046149659995282
+        "x": 1.3005585760116345,
+        "y": 5.545036034680452
       },
       "isLocked": false,
       "linkedName": "CenterLaunch"
@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 2.56,
-        "y": 4.101379875581022
+        "y": 7.0
       },
       "prevControl": {
-        "x": 2.56453487069203,
-        "y": 4.097543136002077
+        "x": 1.8159166009543433,
+        "y": 7.029575674353249
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LongSideNote"
+      "linkedName": "ShortSideNote"
     }
   ],
   "rotationTargets": [],
@@ -38,15 +38,12 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 4.0,
     "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3NotePaths",
-  "previewStartingState": {
-    "rotation": 0,
-    "velocity": 0
-  },
+  "previewStartingState": null,
   "useDefaultConstraints": true
 }

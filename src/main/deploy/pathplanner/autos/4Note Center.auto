@@ -1,0 +1,154 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3,
+      "y": 5.55
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timeIntakeCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "timedBeltCmdRev"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterToShortSideNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "longRangeIntakeCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ShortSideNoteToCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "timedBeltCmdRev"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterToLongSideNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "timedBeltCmd"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "longRangeIntakeCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "longSideNoteToCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "timedBeltCmdRev"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "4NoteAutos",
+  "choreoAuto": false
+}

@@ -9,7 +9,9 @@
   ],
   "autoFolders": [
     "2NoteAutos",
-    "3NoteAutos"
+    "3NoteAutos",
+    "4NoteAutos",
+    "New Folder"
   ],
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 4.0,
