@@ -181,8 +181,8 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     //driveController.leftBumper().and(() -> 
 
     //Operator bindings
-    operatorController.pov(0).whileTrue(new LauncherManualAngleCmd(launcher, 1));
-    operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.5));
+    operatorController.pov(0).whileTrue(new LauncherManualAngleCmd(launcher, 0.5)); //1
+    operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.25)); //-.5
 
     operatorController.pov(270).onTrue(new LauncherAngleCmd(launcher, () -> 1.75, false));
     operatorController.pov(90).onTrue(new LauncherAngleCmd(launcher, () -> -1.3, false));
