@@ -30,12 +30,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "timedBeltCmd"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "timeIntakeCmd"
                 }
               }
@@ -68,12 +62,6 @@
                 "type": "named",
                 "data": {
                   "name": "timeIntakeCmd"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "timedBeltCmd"
                 }
               }
             ]

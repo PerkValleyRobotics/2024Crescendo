@@ -38,10 +38,11 @@ public class LauncherAngleCmd extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(setPos.getAsDouble() <= 8.55 && setPos.getAsDouble() >= -2) {
-      if (this.setPos != null)launcher.setAngle(setPos.getAsDouble());
-      if (this.spinUp) launcher.setReference(1000);
-    }
+    // if(setPos.getAsDouble() <= 8.55 && setPos.getAsDouble() >= -2) {
+    //   if (this.setPos != null)launcher.setAngle(setPos.getAsDouble());
+    //   if (this.spinUp) launcher.setReference(1000);
+    // }
+    // launcher.setAngle(-1.5);
     // launcher.setPivotAbsRef(0.5);
   }
 
@@ -58,7 +59,9 @@ public class LauncherAngleCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isAuto?launcher.getAngle() >= setPos.getAsDouble()-.075 && launcher.getAngle() <= setPos.getAsDouble()+.1:
-                  launcher.getAngle() >= setPos.getAsDouble()-.12 && launcher.getAngle() <= setPos.getAsDouble()+.12;
+    // return isAuto?launcher.getAngle() >= setPos.getAsDouble()-.075 && launcher.getAngle() <= setPos.getAsDouble()+.1:
+    //               launcher.getAngle() >= setPos.getAsDouble()-.12 && launcher.getAngle() <= setPos.getAsDouble()+.12;
+    // return launcher.getAngle() >= -1.5-.12 && launcher.getAngle() <= -1.5+.12;
+    return true;
   }
 }

@@ -14,6 +14,12 @@
         {
           "type": "named",
           "data": {
+            "name": "ToggleIntakeCmd"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "launch"
           }
         },
@@ -25,12 +31,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "CenterNote"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "timedBeltCmd"
                 }
               },
               {
@@ -73,12 +73,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "timedBeltCmd"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "longRangeIntakeCmd"
                 }
               }
@@ -111,12 +105,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "CenterToLongSideNote"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "timedBeltCmd"
                 }
               },
               {

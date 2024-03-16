@@ -38,12 +38,6 @@
                 "data": {
                   "name": "timeIntakeCmd"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "timedBeltCmd"
-                }
               }
             ]
           }

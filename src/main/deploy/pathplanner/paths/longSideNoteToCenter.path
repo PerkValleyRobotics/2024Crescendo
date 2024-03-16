@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.56,
-        "y": 4.101379875581022
+        "x": 2.556898225435407,
+        "y": 3.9974008689110017
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.559435462297808,
-        "y": 4.096080982265362
+        "x": 2.5563336877332152,
+        "y": 3.992101975595342
       },
       "isLocked": false,
       "linkedName": "LongSideNote"
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.7,
+    "maxAcceleration": 3.8,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -45,5 +45,5 @@
   "reversed": false,
   "folder": "3NotePaths",
   "previewStartingState": null,
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

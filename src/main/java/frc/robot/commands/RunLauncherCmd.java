@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
 public class RunLauncherCmd extends Command {
-  //private final double speed;
+  private double speed;
   private final LauncherSubsystem shooter;
   /** Creates a new RunIntakeCmd. */
   public RunLauncherCmd(LauncherSubsystem shooter, DoubleSupplier speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = shooter;
-    //this.speed = speed.getAsDouble();
+    this.speed = speed.getAsDouble();
 
     addRequirements(shooter);
   }
@@ -25,7 +25,7 @@ public class RunLauncherCmd extends Command {
   @Override
   public void initialize() {
     //Start the motor running at the specified Speed
-    shooter.setReference(1000);
+    shooter.setReference(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

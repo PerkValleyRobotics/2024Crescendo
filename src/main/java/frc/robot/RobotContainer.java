@@ -7,7 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.*;
 // import frc.robot.commands.AprilLauncherSetCmd;
-import frc.robot.commands.CenterOnTagCmd;
+// import frc.robot.commands.CenterOnTagCmd;
 import frc.robot.commands.LauncherAngleCmd;
 import frc.robot.commands.LauncherManualAngleCmd;
 import frc.robot.commands.LuanchCmd;
@@ -128,26 +128,29 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     NamedCommands.registerCommand("launch", new LuanchCmd(intake, launcher, conveyor, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2));
     // NamedCommands.registerCommand("centerOnTag", new CenterOnTagCmd(vision, drivebase, 0, 1.2));
     // NamedCommands.registerCommand("behindCenterOnTag", new CenterOnTagCmd(vision, drivebase, 0, .7));
-    NamedCommands.registerCommand("ToggleIntakeCmd", new ToggleIntakeCmd(intake));
-    NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.65).withTimeout(.75));
+    NamedCommands.registerCommand("ToggleIntakeCmd", new ToggleIntakeCmd(intake).withTimeout(0.01));
+    NamedCommands.registerCommand("timedBeltCmd", new RunBeltCmd(conveyor, -.65).withTimeout(1));
     NamedCommands.registerCommand("slowTimedBeltCmd", new RunBeltCmd(conveyor, -.5).withTimeout(1));
-    NamedCommands.registerCommand("timedBeltCmdRev", new RunBeltCmd(conveyor, .5).withTimeout(.175));
-    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.9).withTimeout(1.5));
-    NamedCommands.registerCommand("longRangeIntakeCmd", new RunIntakeCmd(intake, -.9).withTimeout(2.1));
-    NamedCommands.registerCommand("runLauncherCmd", new RunLauncherCmd(launcher, () -> .9625).withTimeout(.75));
+    NamedCommands.registerCommand("timedBeltCmdRev", new RunBeltCmd(conveyor, 0).withTimeout(.001));
+    // NamedCommands.registerCommand("timeIntakeCmd", new ParallelCommandGroup(new RunIntakeCmd(intake, -.9), new RunBeltCmd(conveyor, -.065)).withTimeout(1.5));
+    // NamedCommands.registerCommand("longRangeIntakeCmd", new ParallelCommandGroup(new RunIntakeCmd(intake, -.9), new RunBeltCmd(conveyor, -.065)).withTimeout(2.1));
+    NamedCommands.registerCommand("longRangeIntakeCmd", new RunIntakeCmd(intake, -.95).withTimeout(1.8));
+    NamedCommands.registerCommand("timeIntakeCmd", new RunIntakeCmd(intake, -.95).withTimeout(1.3));
+    
+    NamedCommands.registerCommand("runLauncherCmd", new RunLauncherCmd(launcher, () -> 1000).withTimeout(.75));
     NamedCommands.registerCommand("setLauncherTo60", new LauncherAngleCmd(launcher, ()->8.55, true));
     NamedCommands.registerCommand("AutoAngleLauncher", new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, false).withTimeout(.75));
     NamedCommands.registerCommand("resetLauncher", new LauncherAngleCmd(launcher, () -> 1.5, true).withTimeout(.5));
     NamedCommands.registerCommand("fixedDown", new LauncherAngleCmd(launcher,() ->  2, true).withTimeout(.5));
-    NamedCommands.registerCommand("startAim", new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, false), new AbsoluteDrive(drivebase,
-                                                          // Applies deadbands and inverts controls because joysticks
-                                                          // are back-right positive while robot
-                                                          // controls are front-left positive
-                                                          () -> 0,
-                                                          () -> 0,
-                                                          () -> -(drivebase.triangulateDistanceToSpeaker()*Math.sin(drivebase.getAngleToSpeaker())),
-                                                          () -> -(drivebase.triangulateDistanceToSpeaker()*Math.cos(drivebase.getAngleToSpeaker())))
-).withTimeout(1));
+//     NamedCommands.registerCommand("startAim", new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, false), new AbsoluteDrive(drivebase,
+//                                                           // Applies deadbands and inverts controls because joysticks
+//                                                           // are back-right positive while robot
+//                                                           // controls are front-left positive
+//                                                           () -> 0,
+//                                                           () -> 0,
+//                                                           () -> -(drivebase.triangulateDistanceToSpeaker()*Math.sin(drivebase.getAngleToSpeaker())),
+//                                                           () -> -(drivebase.triangulateDistanceToSpeaker()*Math.cos(drivebase.getAngleToSpeaker())))
+// ).withTimeout(1));
     // NamedCommands.registerCommand("AprilAim", new AprilLauncherSetCmd(vision, drivebase));
 
     // Configure the trigger bindings
@@ -170,7 +173,7 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
    */
   private void configureBindings() {
     //Driver bindings
-    driveController.a().whileTrue(new InstantCommand(drivebase::zeroGyro));
+    driveController.a().onTrue(new InstantCommand(drivebase::zeroGyro));
     //driveController.x().toggleOnTrue(FPSDrive);
     //driveController.x().toggleOnTrue(FPSDrive);
     driveController.leftBumper().whileTrue(CreepFPSDrive);
@@ -181,14 +184,15 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     //driveController.leftBumper().and(() -> 
 
     //Operator bindings
-    operatorController.pov(0).whileTrue(new LauncherManualAngleCmd(launcher, 0.5)); //1
-    operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.25)); //-.5
+    // operatorController.pov(0).whileTrue(new LauncherManualAngleCmd(launcher, 0.5)); //1
+    // operatorController.pov(180).whileTrue(new LauncherManualAngleCmd(launcher, -.25)); //-.5
 
-    operatorController.pov(270).onTrue(new LauncherAngleCmd(launcher, () -> 1.75, false));
-    operatorController.pov(90).onTrue(new LauncherAngleCmd(launcher, () -> -1.3, false));
+    // operatorController.pov(270).onTrue(new LauncherAngleCmd(launcher, () -> 1.75, false));
+    // operatorController.pov(90).onTrue(new LauncherAngleCmd(launcher, () -> -1.3, false));
 
-    operatorController.leftBumper().whileTrue(new RunLauncherCmd(launcher, () -> .9625)); //.9625
-    operatorController.back().and(operatorController.leftBumper()).whileTrue(new RunLauncherCmd(launcher, ()->-.5));
+    operatorController.leftBumper().whileTrue(new RunLauncherCmd(launcher, () -> 1000)); //.9625
+    operatorController.back().and(operatorController.leftBumper()).whileTrue(new RunLauncherCmd(launcher, ()-> -100));
+    operatorController.axisGreaterThan(2, 0.09).whileTrue(new RunLauncherCmd(launcher, () -> operatorController.getLeftTriggerAxis()*1000));
   
     operatorController.rightBumper().whileTrue(new RunBeltCmd(conveyor, -.9));
     operatorController.back().and(operatorController.rightBumper()).whileTrue(new RunBeltCmd(conveyor, .5));
@@ -204,17 +208,17 @@ private FPSDrive CreepFPSDrive = new FPSDrive(drivebase,
     // operatorController.b().onTrue(new SequentialCommandGroup(new LauncherAngleCmd(launcher, () -> 1.6), new ToggleIntakeCmd(intake)));
     // operatorController.b().onFalse(new ToggleIntakeCmd(intake));
 
-    operatorController.y().toggleOnTrue(new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, true, false), new AbsoluteDrive(drivebase,
-                                                          // Applies deadbands and inverts controls because joysticks
-                                                          // are back-right positive while robot
-                                                          // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(-operatorController.getLeftY()/1.5,
-                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(-operatorController.getLeftX()/1.5,
-                                                                                       OperatorConstants.LEFT_X_DEADBAND),
-                                                          () -> -(drivebase.triangulateDistanceToSpeaker()*Math.sin(drivebase.getAngleToSpeaker())),
-                                                          () -> -(drivebase.triangulateDistanceToSpeaker()*Math.cos(drivebase.getAngleToSpeaker())))
-));
+//     operatorController.y().toggleOnTrue(new ParallelCommandGroup(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, true, false), new AbsoluteDrive(drivebase,
+//                                                           // Applies deadbands and inverts controls because joysticks
+//                                                           // are back-right positive while robot
+//                                                           // controls are front-left positive
+//                                                           () -> MathUtil.applyDeadband(-operatorController.getLeftY()/1.5,
+//                                                                                        OperatorConstants.LEFT_Y_DEADBAND),
+//                                                           () -> MathUtil.applyDeadband(-operatorController.getLeftX()/1.5,
+//                                                                                        OperatorConstants.LEFT_X_DEADBAND),
+//                                                           () -> -(drivebase.triangulateDistanceToSpeaker()*Math.sin(drivebase.getAngleToSpeaker())),
+//                                                           () -> -(drivebase.triangulateDistanceToSpeaker()*Math.cos(drivebase.getAngleToSpeaker())))
+// ));
 
 // //10.9895
     // operatorController.y().whileTrue(new LauncherAngleCmd(launcher, () -> -3.06*drivebase.triangulateDistanceToSpeaker()+10.2, false));
