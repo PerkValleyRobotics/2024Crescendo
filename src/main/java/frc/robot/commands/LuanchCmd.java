@@ -23,8 +23,8 @@ public class LuanchCmd extends SequentialCommandGroup {
     addCommands(new LauncherAngleCmd(launcher, angle, true, false).withTimeout(.75), 
                 new ParallelCommandGroup(
                 new RunLauncherCmd(launcher, () -> 0.9625).withTimeout(.63),
-                new RunIntakeCmd(intake, -.9625).withTimeout(.7),
-                new RunBeltCmd(conveyor, -.9625).withTimeout(.7)),
+                new RunIntakeCmd(intake, -.95).withTimeout(.7),
+                new RunBeltCmd(conveyor, -.945).withTimeout(.7)),
                 new LauncherAngleCmd(launcher, () -> 1.5, false).withTimeout(.63));
   }
 }
