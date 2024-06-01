@@ -3,32 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3,
-        "y": 5.55
+        "x": 7.85,
+        "y": 0.77
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3005585760116345,
-        "y": 5.545036034680452
+        "x": 6.739544500466675,
+        "y": 0.41923960332481197
       },
       "isLocked": false,
-      "linkedName": "CenterLaunch"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.488649917917414,
-        "y": 7.058824949003817
+        "x": 0.7921919881844527,
+        "y": 4.5043882961875195
       },
       "prevControl": {
-        "x": 1.7866673263037751,
-        "y": 7.1855718058229465
+        "x": 0.6946944060158917,
+        "y": -0.34124153758996284
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ShortSideNote"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -38,12 +44,15 @@
     "maxAngularAcceleration": 620.0
   },
   "goalEndState": {
-    "velocity": 4.0,
-    "rotation": 0,
+    "velocity": 0,
+    "rotation": -60.40770364064204,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "3NotePaths",
-  "previewStartingState": null,
+  "folder": "2NotePaths",
+  "previewStartingState": {
+    "rotation": 1.4995612029468512,
+    "velocity": 0
+  },
   "useDefaultConstraints": true
 }

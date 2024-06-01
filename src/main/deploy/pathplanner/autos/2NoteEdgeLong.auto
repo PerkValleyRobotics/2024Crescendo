@@ -1,0 +1,62 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7434431971001721,
+      "y": 4.494638537970663
+    },
+    "rotation": -59.53445508054011
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ToggleIntakeCmd"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LongSideEdgeBottomPath"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "longRangeIntakeCmd"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LongSideEdgeBottomBack"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "2NoteAutos",
+  "choreoAuto": false
+}

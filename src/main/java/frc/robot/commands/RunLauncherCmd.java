@@ -12,11 +12,21 @@ import frc.robot.subsystems.*;
 public class RunLauncherCmd extends Command {
   private double speed;
   private final LauncherSubsystem shooter;
+  private boolean PID;
   /** Creates a new RunIntakeCmd. */
   public RunLauncherCmd(LauncherSubsystem shooter, DoubleSupplier speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = shooter;
     this.speed = speed.getAsDouble();
+    this.PID = false;
+
+    addRequirements(shooter);
+  }
+  public RunLauncherCmd(LauncherSubsystem shooter, DoubleSupplier speed, boolean PID) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.shooter = shooter;
+    this.speed = speed.getAsDouble();
+    this.PID = PID;
 
     addRequirements(shooter);
   }
@@ -25,7 +35,8 @@ public class RunLauncherCmd extends Command {
   @Override
   public void initialize() {
     //Start the motor running at the specified Speed
-    shooter.setReference(speed);
+    if (PID) shooter.setReference(speed);
+    else shooter.setSpeed(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,6 +49,7 @@ public class RunLauncherCmd extends Command {
     //Stop the motor
     shooter.setLeft(0);
     shooter.setRight(0);
+    shooter.setSpeed(0);
   }
 
   // Returns true when the command should end.

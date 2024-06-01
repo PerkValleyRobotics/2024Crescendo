@@ -45,7 +45,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(150.0 / 7.0, 1);
 
-    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(3.75), 6.75, 42);
+    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4), 6.75, 42); //3.75
     System.out.println("\"conversionFactor\": {");
     System.out.println("\t\"angle\": " + angleConversionFactor + ",");
     System.out.println("\t\"drive\": " + driveConversionFactor);
@@ -81,7 +81,7 @@ public class SwerveSubsystem extends SubsystemBase {
           return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
         },
         this);
-  }
+          }
 
   public static SwerveSubsystem getInstance() {
     if (instance == null) {

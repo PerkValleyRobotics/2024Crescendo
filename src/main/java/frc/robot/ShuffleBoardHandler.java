@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.AmpSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -33,6 +34,7 @@ public class ShuffleBoardHandler {
   private LauncherSubsystem launcher;
   private SwerveSubsystem swerve;
   private VisionSubsystem vision;
+  private AmpSubsystem ampy;
 
   private GenericEntry launcherSetpoint, launcherEncoder, launcherVelocity, launcherAngleSpeaker, intakeState, odometryX, odometryY, odometryH, angleToSpeaker, odometryUpdated, driverColor, distanceToSpeaker, autoChooser;
   private ShuffleboardLayout launcherGrid, odometryGrid;
@@ -53,6 +55,7 @@ public class ShuffleBoardHandler {
     launcher = LauncherSubsystem.getInstance();
     swerve = SwerveSubsystem.getInstance();
     vision = VisionSubsystem.getInstance();
+    ampy = AmpSubsystem.getInstance();
 
     CameraServer.startAutomaticCapture();
 
@@ -86,6 +89,7 @@ public class ShuffleBoardHandler {
 
   public void update() {
     // SmartDashboard.putNumber("revEAbsolute",revE.getAbsolutePosition());
+    SmartDashboard.putNumber("ServoAngle", ampy.getAngle());
 
     ally = DriverStation.getAlliance();
 

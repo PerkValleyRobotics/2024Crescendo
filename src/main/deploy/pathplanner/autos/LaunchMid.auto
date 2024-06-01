@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7434431971001721,
+      "y": 4.494638537970663
+    },
+    "rotation": -59.309705965201466
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "launch"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LongSideEdgeBottomPath"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "1NoteAutos",
+  "choreoAuto": false
+}

@@ -138,6 +138,11 @@ public class LauncherSubsystem extends SubsystemBase {
     return new double[] {leftEncoder.getVelocity(), rightEncoder.getVelocity()};
   }
 
+  public void setSpeed(double speed) {
+    setLeft(speed);
+    setRight(speed);
+  }
+
   public void setLeft(double speed){
     left.set(speed);
   }

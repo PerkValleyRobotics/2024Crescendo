@@ -20,11 +20,12 @@ public class LuanchCmd extends SequentialCommandGroup {
   public LuanchCmd(IntakeSubsystem intake, LauncherSubsystem launcher, ConveyorSubsystem conveyor, DoubleSupplier angle) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new LauncherAngleCmd(launcher, angle, true, false).withTimeout(.75), 
+    //LauncherAngleCmd(launcher, angle, true, false).withTimeout(.75)
+    addCommands(new RunLauncherCmd(launcher, () -> 0.9625).withTimeout(.5), 
                 new ParallelCommandGroup(
                 new RunLauncherCmd(launcher, () -> 0.9625).withTimeout(.63),
-                new RunIntakeCmd(intake, -.95).withTimeout(.7),
-                new RunBeltCmd(conveyor, -.945).withTimeout(.7)),
+                new RunIntakeCmd(intake, -.95).withTimeout(.71),
+                new RunBeltCmd(conveyor, -.945).withTimeout(.71)),
                 new LauncherAngleCmd(launcher, () -> 1.5, false).withTimeout(.63));
   }
 }
