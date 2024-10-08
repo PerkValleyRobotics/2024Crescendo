@@ -93,29 +93,29 @@ public class RobotContainer {
       // Applies deadbands and inverts controls because joysticks
       // are back-right positive while robot
       // controls are front-left positive
-      () -> MathUtil.applyDeadband(-driveController.getLeftY(),
+      () -> MathUtil.applyDeadband(-operatorController.getLeftY() / 1.5,
           OperatorConstants.LEFT_Y_DEADBAND),
-      () -> MathUtil.applyDeadband(-driveController.getLeftX(),
+      () -> MathUtil.applyDeadband(-operatorController.getLeftX() / 1.5,
           OperatorConstants.LEFT_X_DEADBAND),
-      () -> -driveController.getRightX(),
-      () -> -driveController.getRightY());
+      () -> -operatorController.getRightX(),
+      () -> -operatorController.getRightY());
   private FPSDrive FPSDrive = new FPSDrive(drivebase,
       // Applies deadbands and inverts controls because joysticks
       // are back-right positive while robot
       // controls are front-left positive
-      () -> MathUtil.applyDeadband(-driveController.getLeftY() / 2,
+      () -> MathUtil.applyDeadband(-driveController.getLeftY(),
           OperatorConstants.LEFT_Y_DEADBAND),
-      () -> MathUtil.applyDeadband(-driveController.getLeftX() / 2,
+      () -> MathUtil.applyDeadband(-driveController.getLeftX(),
           OperatorConstants.LEFT_X_DEADBAND),
-      () -> -driveController.getRightX() / 2, () -> true);
+      () -> -driveController.getRightX(), () -> true);
 
   private AbsoluteDrive CreepAbsoluteDrive = new AbsoluteDrive(drivebase,
       // Applies deadbands and inverts controls because joysticks
       // are back-right positive while robot
       // controls are front-left positive
-      () -> MathUtil.applyDeadband(-driveController.getLeftY() / 2,
+      () -> MathUtil.applyDeadband(-driveController.getLeftY(),
           OperatorConstants.LEFT_Y_DEADBAND),
-      () -> MathUtil.applyDeadband(-driveController.getLeftX() / 2,
+      () -> MathUtil.applyDeadband(-driveController.getLeftX(),
           OperatorConstants.LEFT_X_DEADBAND),
       () -> -driveController.getRightX(),
       () -> -driveController.getRightY());
@@ -184,8 +184,8 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    // drivebase.setDefaultCommand(FPSDrive);
-    drivebase.setDefaultCommand(AbsoluteDrive);
+    drivebase.setDefaultCommand(FPSDrive);
+    //drivebase.setDefaultCommand(AbsoluteDrive);
 
     autChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autChooser);
@@ -208,10 +208,11 @@ public class RobotContainer {
   private void configureBindings() {
     // Driver bindings
     driveController.a().onTrue(new InstantCommand(drivebase::zeroGyro));
-    // driveController.x().toggleOnTrue(FPSDrive);
+    // driveController.x().toggleOnTrue (FPSDrive);
     // driveController.x().toggleOnTrue(FPSDrive);
     // driveController.leftBumper().whileTrue(CreepFPSDrive);
-    driveController.leftBumper().whileTrue(CreepAbsoluteDrive);
+    operatorController.pov(90).toggleOnTrue(FPSDrive);
+    //operatorController.leftBumper().whileTrue(CreepAbsoluteDrive);
     // driveController.leftTrigger().and(() ->
     // CommandScheduler.getInstance().isScheduled(AbsoluteDrive)).whileTrue(CreepAbsoluteDrive);
     // driveController.leftTrigger().and(() ->
@@ -231,7 +232,7 @@ public class RobotContainer {
     // false));
 
     operatorController.leftBumper().whileTrue(new RunLauncherCmd(launcher, () -> 1000)); // .9625
-    operatorController.back().and(operatorController.leftBumper()).whileTrue(new RunLauncherCmd(launcher, () -> -100));h
+    operatorController.back().and(operatorController.leftBumper()).whileTrue(new RunLauncherCmd(launcher, () -> -100));
 
     // operatorController.y().whileTrue(new RunLauncherCmd(launcher, () -> 0.8,
     // false));
