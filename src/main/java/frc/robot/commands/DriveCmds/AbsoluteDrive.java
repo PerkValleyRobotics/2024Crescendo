@@ -12,8 +12,8 @@ import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSubsystem;
 import java.util.List;
 import java.util.function.DoubleSupplier;
-import swervelib.SwerveController;
-import swervelib.math.SwerveMath;
+import frc.robot.swervelib.SwerveController;
+import frc.robot.swervelib.math.SwerveMath;
 
 /**
  * An example command that uses an example subsystem.

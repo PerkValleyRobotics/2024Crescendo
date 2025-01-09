@@ -24,14 +24,14 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import swervelib.SwerveController;
-import swervelib.SwerveDrive;
-import swervelib.math.SwerveMath;
-import swervelib.parser.SwerveControllerConfiguration;
-import swervelib.parser.SwerveDriveConfiguration;
-import swervelib.parser.SwerveParser;
-import swervelib.telemetry.SwerveDriveTelemetry;
-import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import frc.robot.swervelib.SwerveController;
+import frc.robot.swervelib.SwerveDrive;
+import frc.robot.swervelib.math.SwerveMath;
+import frc.robot.swervelib.parser.SwerveControllerConfiguration;
+import frc.robot.swervelib.parser.SwerveDriveConfiguration;
+import frc.robot.swervelib.parser.SwerveParser;
+import frc.robot.swervelib.telemetry.SwerveDriveTelemetry;
+import frc.robot.swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class SwerveSubsystem extends SubsystemBase {
 

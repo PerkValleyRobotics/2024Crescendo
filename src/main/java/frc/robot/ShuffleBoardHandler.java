@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.reduxrobotics.sensors.canandcolor.CanandcolorProximityConfig.SamplingPeriod;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.GenericEntry;
